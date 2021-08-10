@@ -17,7 +17,8 @@ app.proxy = true;
 app.use(logger());
 app.use(koaStatic(staticRoot))
 app.use(koaViews(path.resolve(staticRoot)))
-app.use(koaBody());
+app.use(koaBody({multipart: true}));
 app.use(router.routes());
+app.use(router.allowedMethods());
 
 export default app;

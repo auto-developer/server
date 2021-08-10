@@ -2,14 +2,14 @@
   "name": "user-service",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
     "dev": "nodemon npm start",
     "tsc": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "dhc-zhuchuanpeng",
+  "author": "chuanpeng.zhu",
   "license": "ISC",
   "devDependencies": {
     "@types/koa": "^2.13.4",
@@ -17,6 +17,7 @@
     "@types/koa-router": "^7.4.4",
     "@types/koa-static": "^4.0.2",
     "@types/node": "^16.4.13",
+    "@types/oauth2-server": "^3.0.13",
     "nodemon": "^2.0.12",
     "typescript": "^4.3.5"
   },
