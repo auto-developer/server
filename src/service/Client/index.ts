@@ -8,9 +8,11 @@ export const saveClient = async (client: Omit<Client, 'id'>): Promise<Client> =>
     return result;
 }
 
-export const getClientById = async (clientId: string): Promise<Client | Falsey> => {
+export const getClient = async (clientId: string, clientSecret: string): Promise<Client | Falsey> => {
     const client = await ClientModel.findById(clientId)
-    console.log('client', client)
+    if (client?.key !== clientSecret) {
+        return false
+    }
     return client
 }
 

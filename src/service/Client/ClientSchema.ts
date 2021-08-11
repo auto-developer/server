@@ -10,7 +10,7 @@ import {ClientType} from "./Client";
  * [client.accessTokenLifetime]    Number    Client-specific lifetime of generated access tokens in seconds.
  * [client.refreshTokenLifetime]    Number    Client-specific lifetime of generated refresh tokens in seconds.
  */
-export const ClientSchema = new Schema<ClientType>({
+const ClientSchema = new Schema<ClientType>({
     clientSecret: String,
     redirectUris: [String],
     grants: [String],

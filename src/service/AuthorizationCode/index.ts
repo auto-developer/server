@@ -4,7 +4,6 @@ import {AuthorizationCode, Falsey} from "oauth2-server";
 
 export const saveCode = async (code: AuthorizationCode): Promise<AuthorizationCode> => {
     const codeInstance = new AuthorizationCodeModel(code)
-    console.log(codeInstance);
     const result = await codeInstance.save();
     return result
 }

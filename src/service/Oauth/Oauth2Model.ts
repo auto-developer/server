@@ -1,15 +1,15 @@
 import {
     AuthorizationCode,
     AuthorizationCodeModel,
-    Client,
+    Client, Falsey,
     PasswordModel, RefreshToken,
     RefreshTokenModel,
     Token,
     User
 } from "oauth2-server";
-import {getClientById} from '../Client';
-import {getCodeByAuthorizationCode, saveCode} from '../Code';
-import {getTokenByAccessToken, saveToken, deleteToken, findTokenByRefreshToken} from '../Token';
+import {getClient} from '../Client';
+import {getCodeByAuthorizationCode, saveCode} from '../AuthorizationCode';
+import {findToken, saveToken, deleteToken, findRefreshToken} from '../Token';
 import {getAuthenticationByUsername} from '../Authentication';
 
 export const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
@@ -18,9 +18,7 @@ export const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel =
      * request authentication
      * @param accessToken
      */
-    getAccessToken: async (accessToken: string): Promise<Token> => {
-        return await getTokenByAccessToken(accessToken)
-    },
+    getAccessToken: findToken,
 
     /**
      * authorization_code grant
@@ -38,18 +36,16 @@ export const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel =
      * @param clientSecret string
      * @returns client {Promise<Client>}
      */
-    getClient: async (clientId: string, clientSecret: string): Promise<Client> => {
-        return await getClientById(clientId)
-    },
+    getClient: getClient,
 
     /**
      * password grant
      * @param username
      * @param password
      */
-    getUser: async (username, password): Promise<User> => {
+    getUser: async (username, password): Promise<User | Falsey> => {
         const authentication = await getAuthenticationByUsername(username, password);
-        return authentication.user;
+        return authentication && authentication.user;
     },
 
     /**
@@ -62,7 +58,7 @@ export const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel =
      * @param user
      * @returns {Promise<Token>}
      */
-    saveToken: async (token, client, user): Promise<Token> => {
+    saveToken: async (token, client, user): Promise<Token | Falsey> => {
         return await saveToken({...token, client, user});
     },
 
@@ -100,13 +96,13 @@ export const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel =
      * refresh_token
      * @param refreshToken refreshToken
      */
-    getRefreshToken: findTokenByRefreshToken,
+    getRefreshToken: findRefreshToken,
 
     /**
      * refresh_token
      */
     revokeToken: async (token: RefreshToken | Token): Promise<boolean> => {
-        const tokenInstance = await deleteToken(token.accessToken);
-        return tokenInstance.refreshToken === token.refreshToken;
+        const removeResult = await deleteToken(token.accessToken);
+        return removeResult;
     },
 }

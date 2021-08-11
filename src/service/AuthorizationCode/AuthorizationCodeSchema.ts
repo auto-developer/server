@@ -12,7 +12,7 @@ import {mongoose} from "../../db";
  * code.client.id	String	A unique string identifying the client.
  * code.user	Object	The user associated with the authorization code.
  */
-export const AuthorizationCodeSchema = new Schema<AuthorizationCode>({
+const AuthorizationCodeSchema = new Schema<AuthorizationCode>({
     authorizationCode: String,
     expiresAt: Date,
     redirectUri: String,

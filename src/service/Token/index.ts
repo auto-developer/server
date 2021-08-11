@@ -1,5 +1,5 @@
 import {Falsey, RefreshToken, Token} from "oauth2-server";
-import {TokenModel} from "./TokenSchema";
+import {RefreshTokenModel, TokenModel} from "./TokenSchema";
 
 
 export const saveToken = async (token: Token): Promise<Token> => {
@@ -8,13 +8,14 @@ export const saveToken = async (token: Token): Promise<Token> => {
     return result;
 }
 
-export const getTokenByAccessToken = async (accessToken: string): Promise<Token | Falsey> => {
+export const findToken = async (accessToken: string): Promise<Token | Falsey> => {
     const tokenInstance = await TokenModel.findOne({accessToken}).populate('user')
     return tokenInstance;
 }
 
-export const findTokenByRefreshToken = async (refreshToken: string): Promise<Token | Falsey> => {
-    const tokenInstance = await TokenModel.findOne({refreshToken}).populate('client');
+export const findRefreshToken = async (refreshToken: string): Promise<RefreshToken | Falsey> => {
+    const tokenInstance = await RefreshTokenModel.findOne({refreshToken})
+        .populate('client')
     console.log("debug::", refreshToken, tokenInstance)
     return tokenInstance;
 }

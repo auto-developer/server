@@ -17,6 +17,7 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
         authenticateHandler: authenticateHandler,
     }
     const code = await oauth.authorize(oauthRequest, oauthResponse, options)
+    console.log('code:', code)
     ctx.body = oauthResponse.body
     ctx.status = oauthResponse.status || 500
     ctx.set(oauthResponse.headers || {})

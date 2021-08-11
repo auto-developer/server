@@ -1,5 +1,5 @@
 import {model, Schema} from 'mongoose'
-import {Token} from "oauth2-server";
+import {RefreshToken, Token} from "oauth2-server";
 import {mongoose} from "../../db";
 
 /**
@@ -13,7 +13,7 @@ import {mongoose} from "../../db";
  * token.client.id    String    A unique string identifying the client.
  * token.user    Object    The user associated with the access token.
  */
-export const TokenSchema = new Schema<Token>({
+const TokenSchema = new Schema<Token>({
     accessToken: String,
     accessTokenExpiresAt: Date,
     refreshToken: String,
@@ -24,3 +24,12 @@ export const TokenSchema = new Schema<Token>({
 });
 
 export const TokenModel = mongoose.model<Token>('Token', TokenSchema)
+
+const RefreshTokenSchema = new Schema<RefreshToken>({
+    refreshToken: String,
+    refreshTokenExpiresAt: Date,
+    scope: String,
+    client: {type: Schema.Types.ObjectId, ref: 'Client'},
+    user: {type: Schema.Types.ObjectId, ref: 'User'},
+});
+export const RefreshTokenModel = mongoose.model<RefreshToken>('Token', RefreshTokenSchema)
