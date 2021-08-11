@@ -1,15 +1,16 @@
 import {
     AuthorizationCode,
     AuthorizationCodeModel,
-    Client, Falsey,
-    PasswordModel, RefreshToken,
+    Falsey,
+    PasswordModel,
+    RefreshToken,
     RefreshTokenModel,
     Token,
     User
 } from "oauth2-server";
 import {getClient} from '../Client';
 import {getCodeByAuthorizationCode, saveCode} from '../AuthorizationCode';
-import {findToken, saveToken, deleteToken, findRefreshToken} from '../Token';
+import {deleteToken, findRefreshToken, findToken, saveToken} from '../Token';
 import {getAuthenticationByUsername} from '../Authentication';
 
 export const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
@@ -32,9 +33,9 @@ export const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel =
      *  client_credentials grant
      *  refresh_token grant
      *  password grant
-     * @param clientId string
-     * @param clientSecret string
-     * @returns client {Promise<Client>}
+     *  @param clientId string
+     *  @param clientSecret string
+     *  @returns client {Promise<Client|Falsy>}
      */
     getClient: getClient,
 
@@ -53,9 +54,9 @@ export const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel =
      * client_credentials grant
      * refresh_token grant
      * password grant
-     * @param token
-     * @param client
-     * @param user
+     * @param token string
+     * @param client user
+     * @param user user
      * @returns {Promise<Token>}
      */
     saveToken: async (token, client, user): Promise<Token | Falsey> => {

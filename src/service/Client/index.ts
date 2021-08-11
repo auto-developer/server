@@ -10,10 +10,7 @@ export const saveClient = async (client: Omit<Client, 'id'>): Promise<Client> =>
 
 export const getClient = async (clientId: string, clientSecret: string): Promise<Client | Falsey> => {
     const client = await ClientModel.findById(clientId)
-    console.log(client, clientSecret, client?.key !== clientSecret)
-    if (client?.key !== clientSecret) {
-        return false
-    }
+    console.log(client, clientSecret)
     return client
 }
 

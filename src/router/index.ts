@@ -6,7 +6,6 @@ import {postClient} from "../service/Client";
 
 const router = new Router<DefaultState, Context>();
 
-
 const user = new Router<DefaultState, Context>();
 user
     .get('/', getUsers)
@@ -22,6 +21,5 @@ oauth
     .get('/authorize', getAuthorize)
     .post('/token', postToken)
 router.use('/oauth', oauth.routes());
-
 
 export default router;
