@@ -1,6 +1,7 @@
 import {model, Schema} from 'mongoose'
 import {User} from "oauth2-server";
 import {GENDER, PLATFORM, USER_ROLE} from "./User";
+import {mongoose} from "../../db";
 
 /**
  * UserSchema 用户基础信息
@@ -35,4 +36,4 @@ const UserSchema = new Schema<User>({
 }, {toObject: {virtuals: true},})
 
 
-export const UserModel = model<User>('User', UserSchema)
+export const UserModel = mongoose.model<User>('User', UserSchema)

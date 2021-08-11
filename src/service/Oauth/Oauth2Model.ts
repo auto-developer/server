@@ -18,7 +18,9 @@ export const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel =
      * request authentication
      * @param accessToken
      */
-    getAccessToken: getTokenByAccessToken,
+    getAccessToken: async (accessToken: string): Promise<Token> => {
+        return await getTokenByAccessToken(accessToken)
+    },
 
     /**
      * authorization_code grant

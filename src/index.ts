@@ -12,3 +12,6 @@ databaseConnection()
         app.listen(SERVICE_PORT);
         console.log('server listen at', SERVICE_PORT);
     })
+    .catch(e => {
+        console.error(e)
+    })

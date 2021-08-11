@@ -1,5 +1,6 @@
 import {model, Schema} from 'mongoose'
 import {Token} from "oauth2-server";
+import {mongoose} from "../../db";
 
 /**
  * token    Object    The token(s) to be saved.
@@ -22,4 +23,4 @@ export const TokenSchema = new Schema<Token>({
     user: {type: Schema.Types.ObjectId, ref: 'User'},
 });
 
-export const TokenModel = model<Token>('Token', TokenSchema)
+export const TokenModel = mongoose.model<Token>('Token', TokenSchema)

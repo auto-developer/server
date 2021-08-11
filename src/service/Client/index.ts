@@ -10,6 +10,7 @@ export const saveClient = async (client: Omit<Client, 'id'>): Promise<Client> =>
 
 export const getClientById = async (clientId: string): Promise<Client | Falsey> => {
     const client = await ClientModel.findById(clientId)
+    console.log('client', client)
     return client
 }
 

@@ -1,6 +1,6 @@
 import {Schema} from 'mongoose'
-import {PLATFORM} from "../../type";
 import {mongoose} from "../../db";
+import {PLATFORM} from "../User/User";
 
 /**
  * authentication.identityType  认证方式

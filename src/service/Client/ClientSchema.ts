@@ -1,4 +1,5 @@
-import {model, Schema} from 'mongoose'
+import {Schema} from "mongoose";
+import {mongoose} from '../../db'
 import {ClientType} from "./Client";
 
 /**
@@ -17,4 +18,4 @@ export const ClientSchema = new Schema<ClientType>({
     refreshTokenLifetime: Number,
 });
 
-export const ClientModel = model<ClientType>('Client', ClientSchema);
+export const ClientModel = mongoose.model<ClientType>('Client', ClientSchema);

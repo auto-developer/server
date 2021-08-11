@@ -1,5 +1,6 @@
 import {model, Schema} from 'mongoose'
 import {AuthorizationCode} from "oauth2-server";
+import {mongoose} from "../../db";
 
 /**
  * code	Object	The return value.
@@ -20,4 +21,4 @@ export const AuthorizationCodeSchema = new Schema<AuthorizationCode>({
     user: {type: Schema.Types.ObjectId, ref: 'User'},
 });
 
-export const AuthorizationCodeModel = model<AuthorizationCode>('Code', AuthorizationCodeSchema)
+export const AuthorizationCodeModel = mongoose.model<AuthorizationCode>('Code', AuthorizationCodeSchema)
