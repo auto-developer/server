@@ -25,11 +25,4 @@ const TokenSchema = new Schema<Token>({
 
 export const TokenModel = mongoose.model<Token>('Token', TokenSchema)
 
-const RefreshTokenSchema = new Schema<RefreshToken>({
-    refreshToken: String,
-    refreshTokenExpiresAt: Date,
-    scope: String,
-    client: {type: Schema.Types.ObjectId, ref: 'Client'},
-    user: {type: Schema.Types.ObjectId, ref: 'User'},
-});
-export const RefreshTokenModel = mongoose.model<RefreshToken>('Token', RefreshTokenSchema)
+export const RefreshTokenModel = mongoose.model<RefreshToken>('Token', TokenSchema)
