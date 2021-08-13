@@ -1,0 +1,71 @@
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+main {
+    width: 340px;
+    margin: 0 auto;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+.auth-form {
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.app-icon {
+    text-align: center;
+}
+
+.auth-form h1 {
+    font-size: 24px;
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: -0.5px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: rgb(246, 248, 250);
+    border-radius: 6px;
+    border: 1px solid rgb(235, 237, 239);
+}
+
+form label {
+    font-size: 14px;
+    margin-bottom: 7px;
+}
+
+form input {
+    border-radius: 6px;
+    padding: 5px 12px;
+    border: 1px solid rgb(225, 228, 232);
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+form input[type=submit] {
+    background-color: rgb(46, 164, 79);
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    height: 32px;
+}
+
+p {
+    border: 1px solid rgb(209, 213, 218);
+    border-radius: 6px;
+    padding: 15px 20px;
+    font-size: 14px;
+}
+
+p a {
+    text-decoration: none;
+    color: rgb(3, 102, 214);
+}
