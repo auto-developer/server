@@ -1,6 +1,7 @@
 import {Client, Falsey} from "oauth2-server";
 import {ClientModel} from "./ClientSchema";
 import {Context, Next} from "koa";
+import {ClientType} from "./Client";
 
 export const saveClient = async (client: Omit<Client, 'id'>): Promise<Client> => {
     const clientInstance = new ClientModel(client);
@@ -8,7 +9,11 @@ export const saveClient = async (client: Omit<Client, 'id'>): Promise<Client> =>
     return result;
 }
 
-export const getClient = async (clientId: string, clientSecret: string): Promise<Client | Falsey> => {
+export const findClientById = async (clientId: string): Promise<Client | Falsey> => {
+    const client = await ClientModel.findById(clientId)
+    return client?.toObject<ClientType>()
+}
+export const findClient = async (clientId: string, clientSecret: string): Promise<Client | Falsey> => {
     const client = await ClientModel.findById(clientId)
     console.log(client, clientSecret)
     return client

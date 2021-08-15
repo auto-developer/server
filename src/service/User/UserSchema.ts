@@ -1,4 +1,4 @@
-import {model, Schema} from 'mongoose'
+import {Schema} from 'mongoose'
 import {User} from "oauth2-server";
 import {GENDER, PLATFORM, USER_ROLE} from "./User";
 import {mongoose} from "../../db";

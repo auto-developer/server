@@ -21,7 +21,7 @@ const TokenSchema = new Schema<Token>({
     scope: String,
     client: {type: Schema.Types.ObjectId, ref: 'Client'},
     user: {type: Schema.Types.ObjectId, ref: 'User'},
-});
+}, {toObject: {virtuals: true}});
 
 export const TokenModel = mongoose.model<Token>('Token', TokenSchema)
 

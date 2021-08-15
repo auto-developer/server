@@ -15,7 +15,7 @@ main {
     box-sizing: border-box;
 }
 
-.app-icon {
+.auth-form .app-icon {
     text-align: center;
 }
 
@@ -26,9 +26,7 @@ main {
     letter-spacing: -0.5px;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
+.auth-form .auth-form-body {
     padding: 20px;
     box-sizing: border-box;
     background-color: rgb(246, 248, 250);
@@ -36,12 +34,44 @@ form {
     border: 1px solid rgb(235, 237, 239);
 }
 
-form label {
+.auth-form .auth-application {
+    text-align: center;
+}
+
+.auth-form .logo {
+    border-radius: 50%;
+    text-align: center;
+    margin: auto;
+    display: flex;
+    width: 96px;
+    justify-content: center;
+    align-items: center;
+    height: 96px;
+    background-color: white;
+    box-shadow: rgba(149, 157, 165, 0.15) 0 3px 6px 0;
+}
+
+.auth-form .logo img {
+    width: 50px;
+    height: 50px;
+}
+
+.auth-form hr{
+
+}
+
+.auth-form form {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.auth-form form label {
     font-size: 14px;
     margin-bottom: 7px;
 }
 
-form input {
+.auth-form form input {
     border-radius: 6px;
     padding: 5px 12px;
     border: 1px solid rgb(225, 228, 232);
@@ -51,7 +81,7 @@ form input {
     box-sizing: border-box;
 }
 
-form input[type=submit] {
+.auth-form form input[type=submit] {
     background-color: rgb(46, 164, 79);
     color: white;
     cursor: pointer;
@@ -60,14 +90,14 @@ form input[type=submit] {
     height: 32px;
 }
 
-p {
+.auth-form p {
     border: 1px solid rgb(209, 213, 218);
     border-radius: 6px;
     padding: 15px 20px;
     font-size: 14px;
 }
 
-p a {
+.auth-form p a {
     text-decoration: none;
     color: rgb(3, 102, 214);
 }

@@ -16,16 +16,24 @@
       </svg>
     </div>
     <h1>Sign in to Github</h1>
-    <form action="/oauth/session" method="post">
-      <label for="identifier">Username or email address</label>
-      <input id="identifier" name="identifier" type="text">
-      <label for="certificate">Password</label>
-      <input id="certificate" name="certificate" type="password">
-      <input name="return_to" type="hidden" value="/opopop">
-      <input name="timestamp" type="hidden" value="todo">
-      <input name="timestamp_secret" type="hidden" value="todo">
-      <input type="submit" value="Sign in">
-    </form>
+    <div class="auth-form-body">
+      <div class="auth-application">
+        <div class="logo">
+          <img src="{{client.logo}}" alt="Application logo">
+        </div>
+        <hr>
+      </div>
+      <form action="/oauth/session" method="post">
+        <label for="identifier">Username or email address</label>
+        <input id="identifier" name="identifier" type="text">
+        <label for="certificate">Password</label>
+        <input id="certificate" name="certificate" type="password">
+        <input name="return_to" type="hidden" value="/opopop">
+        <input name="timestamp" type="hidden" value="{{timestamp}}">
+        <input name="timestamp_secret" type="hidden" value="todo">
+        <input type="submit" value="Sign in">
+      </form>
+    </div>
     <p>
       New to Github? <a href="/sign-up">Create an account</a>.
     </p>

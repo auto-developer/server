@@ -17,7 +17,7 @@ app.proxy = true;
 
 app.use(logger());
 app.use(koaStatic(staticRoot))
-app.use(koaViews(viewRoot, {extension: 'html'}))
+app.use(koaViews(viewRoot, {map: {html: 'handlebars'}}))
 app.use(koaBody({multipart: true}));
 app.use(router.routes());
 app.use(router.allowedMethods());
