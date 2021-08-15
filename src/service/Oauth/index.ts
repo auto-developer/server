@@ -4,13 +4,25 @@ import {model} from './Oauth2Model'
 
 const oauth = new OAuth2Server({model})
 
+export const beforeGetAuthorize = async (ctx: Context, next: Next) => {
+    const {client_id} = ctx.request.query
+    console.log(client_id)
+    const user = null
+    if (!user) {
+        ctx.redirect(`/sign-in${ctx.request.search}`)
+    } else {
+        await next()
+    }
+}
+
 export const getAuthorize = async (ctx: Context, next: Next) => {
     const oauthRequest = new Request(ctx.request);
     const oauthResponse = new Response(ctx.response);
     const authenticateHandler = {
         handle: function (request: Request, response: Response) {
-            console.log('authenticateHandler')
-            return '5f85b6c2d43ec65337cac93a'
+            console.log('authenticateHandler', '判断')
+            // response.redirect('/sign-in')
+            return null
         }
     }
     const options = {
@@ -22,6 +34,13 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
     ctx.status = oauthResponse.status || 500
     ctx.set(oauthResponse.headers || {})
     await next();
+
+}
+
+export const postSession = async (ctx: Context, next: Next) => {
+    const {identifier, certificate, return_to, timestamp, timestamp_secret} = ctx.request.body
+    ctx.redirect(return_to)
+    await next()
 }
 
 export const postToken = async (ctx: Context, next: Next) => {

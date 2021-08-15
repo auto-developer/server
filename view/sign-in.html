@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Sign In</title>
-  <link rel="stylesheet" href="./sign-in.css">
+  <link rel="stylesheet" href="/sign-in.css">
 </head>
 <body>
 <main>
@@ -16,11 +16,14 @@
       </svg>
     </div>
     <h1>Sign in to Github</h1>
-    <form action="/session">
+    <form action="/oauth/session" method="post">
       <label for="identifier">Username or email address</label>
-      <input id="identifier" type="text">
+      <input id="identifier" name="identifier" type="text">
       <label for="certificate">Password</label>
-      <input id="certificate" type="password">
+      <input id="certificate" name="certificate" type="password">
+      <input name="return_to" type="hidden" value="/opopop">
+      <input name="timestamp" type="hidden" value="todo">
+      <input name="timestamp_secret" type="hidden" value="todo">
       <input type="submit" value="Sign in">
     </form>
     <p>
