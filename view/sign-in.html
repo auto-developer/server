@@ -3,7 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <title>Sign In</title>
-  <link rel="stylesheet" href="/sign-in.css">
+  <style>
+      html, body {
+          padding: 0;
+          margin: 0;
+      }
+
+      main {
+          width: 340px;
+          margin: 0 auto;
+          padding: 0 16px;
+          box-sizing: border-box;
+      }
+
+      .auth-form {
+          padding: 16px;
+          box-sizing: border-box;
+      }
+
+      .auth-form .app-icon {
+          text-align: center;
+      }
+
+      .auth-form h1 {
+          font-size: 24px;
+          text-align: center;
+          font-weight: 300;
+          letter-spacing: -0.5px;
+      }
+
+      .auth-form .auth-form-body {
+          padding: 20px;
+          box-sizing: border-box;
+          background-color: rgb(246, 248, 250);
+          border-radius: 6px;
+          border: 1px solid rgb(235, 237, 239);
+      }
+
+      .auth-form .auth-application {
+          text-align: center;
+      }
+
+      .auth-form .auth-application p {
+          font-size: 16px;
+          font-weight: 400;
+          border: none;
+          padding: 0;
+      }
+
+      .auth-form .logo {
+          border-radius: 50%;
+          text-align: center;
+          margin: auto;
+          display: flex;
+          width: 96px;
+          justify-content: center;
+          align-items: center;
+          height: 96px;
+          background-color: white;
+          box-shadow: rgba(149, 157, 165, 0.15) 0 3px 6px 0;
+      }
+
+      .auth-form .logo img {
+          width: 50px;
+          height: 50px;
+      }
+
+      .auth-form hr {
+
+      }
+
+      .auth-form form {
+          display: flex;
+          flex-direction: column;
+
+      }
+
+      .auth-form form label {
+          font-size: 14px;
+          margin-bottom: 7px;
+      }
+
+      .auth-form form input {
+          border-radius: 6px;
+          padding: 5px 12px;
+          border: 1px solid rgb(225, 228, 232);
+          margin-top: 5px;
+          margin-bottom: 15px;
+          line-height: 20px;
+          box-sizing: border-box;
+      }
+
+      .auth-form form input[type=submit] {
+          background-color: rgb(46, 164, 79);
+          color: white;
+          cursor: pointer;
+          font-size: 14px;
+          font-weight: 500;
+          height: 32px;
+      }
+
+      .auth-form p {
+          border: 1px solid rgb(209, 213, 218);
+          border-radius: 6px;
+          padding: 15px 20px;
+          font-size: 14px;
+      }
+
+      .auth-form p a {
+          text-decoration: none;
+          color: rgb(3, 102, 214);
+      }
+
+  </style>
 </head>
 <body>
 <main>
@@ -14,6 +126,7 @@
         <path fill-rule="evenodd"
               d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
       </svg>
+
     </div>
     <h1>Sign in to Github</h1>
     <div class="auth-form-body">
@@ -21,6 +134,11 @@
         <div class="logo">
           <img src="{{client.logo}}" alt="Application logo">
         </div>
+        <p>
+          Sign in to <strong>GitHub</strong>
+          <br>
+          to continue to <strong>GitLab.com</strong>
+        </p>
         <hr>
       </div>
       <form action="/oauth/session" method="post">
@@ -28,7 +146,7 @@
         <input id="identifier" name="identifier" type="text">
         <label for="certificate">Password</label>
         <input id="certificate" name="certificate" type="password">
-        <input name="return_to" type="hidden" value="/opopop">
+        <input name="return_to" type="hidden" value="{{return_to}}">
         <input name="timestamp" type="hidden" value="{{timestamp}}">
         <input name="timestamp_secret" type="hidden" value="todo">
         <input type="submit" value="Sign in">

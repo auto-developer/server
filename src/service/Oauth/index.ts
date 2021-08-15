@@ -6,10 +6,17 @@ const oauth = new OAuth2Server({model})
 
 export const beforeGetAuthorize = async (ctx: Context, next: Next) => {
     const {client_id} = ctx.request.query
-    console.log(client_id)
+    if (!client_id || Array.isArray(client_id)) {
+        throw Error();
+    }
+    const query = new URLSearchParams({
+        client_id,
+        return_to: ctx.request.url
+    })
+
     const user = null
     if (!user) {
-        ctx.redirect(`/sign-in${ctx.request.search}`)
+        ctx.redirect(`/sign-in?${query.toString()}`)
     } else {
         await next()
     }
@@ -39,6 +46,8 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
 
 export const postSession = async (ctx: Context, next: Next) => {
     const {identifier, certificate, return_to, timestamp, timestamp_secret} = ctx.request.body
+    const user = {}
+    ctx.
     ctx.redirect(return_to)
     await next()
 }

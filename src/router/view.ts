@@ -7,7 +7,7 @@ const router = new Router<DefaultState, Context>()
         await ctx.render('index', {test: 123})
     })
     .get('/sign-in', async (ctx: Context) => {
-        const {client_id, client_secret} = ctx.request.query
+        const {client_id, return_to} = ctx.request.query
         let client
         console.log(client_id && !Array.isArray(client_id))
         if (client_id && !Array.isArray(client_id)) {
@@ -16,7 +16,7 @@ const router = new Router<DefaultState, Context>()
             console.log('client logo:', client && client.logo)
         }
         const timestamp = new Date();
-        ctx.state = {timestamp, client}
+        ctx.state = {timestamp, client, return_to}
         console.log(ctx.state);
         await ctx.render('sign-in')
     })
