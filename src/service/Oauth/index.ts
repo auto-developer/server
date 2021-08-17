@@ -44,14 +44,6 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
 
 }
 
-export const postSession = async (ctx: Context, next: Next) => {
-    const {identifier, certificate, return_to, timestamp, timestamp_secret} = ctx.request.body
-    const user = {}
-    ctx.
-    ctx.redirect(return_to)
-    await next()
-}
-
 export const postToken = async (ctx: Context, next: Next) => {
     const oauthRequest = new Request(ctx.request);
     const oauthResponse = new Response(ctx.response);

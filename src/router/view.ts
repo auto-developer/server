@@ -15,8 +15,7 @@ const router = new Router<DefaultState, Context>()
             console.log('client:', client)
             console.log('client logo:', client && client.logo)
         }
-        const timestamp = new Date();
-        ctx.state = {timestamp, client, return_to}
+        ctx.state = {client_id, client_secret: client && client?.key, client, return_to}
         console.log(ctx.state);
         await ctx.render('sign-in')
     })

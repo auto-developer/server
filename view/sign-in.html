@@ -141,14 +141,15 @@
         </p>
         <hr>
       </div>
-      <form action="/oauth/session" method="post">
-        <label for="identifier">Username or email address</label>
-        <input id="identifier" name="identifier" type="text">
-        <label for="certificate">Password</label>
-        <input id="certificate" name="certificate" type="password">
+      <form action="/oauth/token" method="post">
+        <label for="username">Username or email address</label>
+        <input id="username" name="username" type="text">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password">
         <input name="return_to" type="hidden" value="{{return_to}}">
-        <input name="timestamp" type="hidden" value="{{timestamp}}">
-        <input name="timestamp_secret" type="hidden" value="todo">
+        <input name="client_id" type="hidden" value="{{client_id}}">
+        <input name="client_secret" type="hidden" value="{{client_secret}}">
+        <input name="grant_type" type="hidden" value="password">
         <input type="submit" value="Sign in">
       </form>
     </div>
