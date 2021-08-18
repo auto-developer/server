@@ -9,11 +9,8 @@ const router = new Router<DefaultState, Context>()
     .get('/sign-in', async (ctx: Context) => {
         const {client_id, return_to} = ctx.request.query
         let client
-        console.log(client_id && !Array.isArray(client_id))
         if (client_id && !Array.isArray(client_id)) {
             client = await findClientById(client_id)
-            console.log('client:', client)
-            console.log('client logo:', client && client.logo)
         }
         ctx.state = {client_id, client_secret: client && client?.key, client, return_to}
         console.log(ctx.state);

@@ -1,5 +1,6 @@
 import {Mongoose} from 'mongoose'
 import {Sequelize} from 'sequelize';
+import Redis from 'ioredis'
 import fs from 'fs';
 import {MYSQL_DATABASE, MYSQL_HOST, MYSQL_PASSWORD, MYSQL_PORT, MYSQL_USERNAME} from '../config';
 
@@ -19,6 +20,6 @@ export const sequelize = new Sequelize({
     logging: msg => logStream.write(msg + '\n'),
 });
 
-const mongoose = new Mongoose()
+export const mongoose = new Mongoose()
 
-export {mongoose}
+export const redis = new Redis()

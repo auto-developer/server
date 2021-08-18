@@ -1,6 +1,8 @@
 import OAuth2Server, {Request, Response} from 'oauth2-server'
 import {Context, Next} from "koa";
 import {model} from './Oauth2Model'
+import {v4} from 'uuid'
+import {redis} from "../../db";
 
 const oauth = new OAuth2Server({model})
 
@@ -13,23 +15,29 @@ export const beforeGetAuthorize = async (ctx: Context, next: Next) => {
         client_id,
         return_to: ctx.request.url
     })
-
-    const user = null
-    if (!user) {
-        ctx.redirect(`/sign-in?${query.toString()}`)
-    } else {
-        await next()
+    const session = ctx.cookies.get('user_session')
+    if (session) {
+        const user = await redis.get(session)
+        if (user) {
+            ctx.state.user = user
+            return await next()
+        }
     }
+    ctx.redirect(`/sign-in?${query.toString()}`)
 }
 
 export const getAuthorize = async (ctx: Context, next: Next) => {
     const oauthRequest = new Request(ctx.request);
     const oauthResponse = new Response(ctx.response);
     const authenticateHandler = {
-        handle: function (request: Request, response: Response) {
-            console.log('authenticateHandler', '判断')
-            // response.redirect('/sign-in')
-            return null
+        handle: async (request: Request, response: Response) => {
+            console.log('authenticateHandler', request)
+            const session = ctx.cookies.get('user_session')
+            if (!session) {
+                return null
+            }
+            const userId = await redis.get(session)
+            return userId
         }
     }
     const options = {
@@ -42,6 +50,17 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
     ctx.set(oauthResponse.headers || {})
     await next();
 
+}
+
+export const postSession = async (ctx: Context, next: Next) => {
+    const {identifier, certificate, return_to, timestamp, timestamp_secret} = ctx.request.body
+    const user = {id: '611a7c0af687e34c050767fb', name: 'lossa'}
+    const session = v4()
+    await redis.set(session, user.id)
+    console.log(session)
+    ctx.cookies.set('user_session', session)
+    ctx.redirect(return_to)
+    await next()
 }
 
 export const postToken = async (ctx: Context, next: Next) => {
