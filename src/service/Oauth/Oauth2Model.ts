@@ -11,7 +11,7 @@ import {
 import {findClient} from '../Client';
 import {getCodeByAuthorizationCode, saveCode} from '../AuthorizationCode';
 import {deleteToken, findRefreshToken, findToken, saveToken} from '../Token';
-import {getAuthenticationByUsername} from '../Authentication';
+import {findAuthenticationByIdentifier} from '../Authentication';
 
 export const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
 
@@ -45,7 +45,7 @@ export const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel =
      * @param password
      */
     getUser: async (username, password): Promise<User | Falsey> => {
-        const authentication = await getAuthenticationByUsername(username, password);
+        const authentication = await findAuthenticationByIdentifier(username, password);
         return authentication && authentication.user;
     },
 

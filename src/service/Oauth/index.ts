@@ -3,6 +3,7 @@ import {Context, Next} from "koa";
 import {model} from './Oauth2Model'
 import {v4} from 'uuid'
 import {redis} from "../../db";
+import {findAuthenticationByIdentifier} from "../Authentication";
 
 const oauth = new OAuth2Server({model})
 
@@ -54,9 +55,12 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
 
 export const postSession = async (ctx: Context, next: Next) => {
     const {identifier, certificate, return_to, timestamp, timestamp_secret} = ctx.request.body
-    const user = {id: '611a7c0af687e34c050767fb', name: 'lossa'}
+    const auth = await findAuthenticationByIdentifier(identifier, certificate)
+    if (!auth) {
+        return
+    }
     const session = v4()
-    await redis.set(session, user.id)
+    await redis.set(session, auth.user.id)
     console.log(session)
     ctx.cookies.set('user_session', session)
     ctx.redirect(return_to)
@@ -68,7 +72,7 @@ export const postToken = async (ctx: Context, next: Next) => {
     const oauthResponse = new Response(ctx.response);
 
     try {
-        const tokenString = await oauth.token(oauthRequest, oauthResponse)
+        await oauth.token(oauthRequest, oauthResponse)
         ctx.body = oauthResponse.body;
         ctx.status = oauthResponse.status || 500
         ctx.set(oauthResponse.headers || {});

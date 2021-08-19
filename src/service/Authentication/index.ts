@@ -8,7 +8,7 @@ export const saveAuthentication = async (authentication: Authentication): Promis
     return result.toObject()
 }
 
-export const getAuthenticationByUsername = async (username: string, password: string): Promise<Authentication | Falsey> => {
+export const findAuthenticationByIdentifier = async (username: string, password: string): Promise<Authentication | Falsey> => {
     const instance = await AuthenticationModel.findOne({
         identityType: 'username',
         identifier: username,
