@@ -25,3 +25,6 @@ POST /session
 ```
 redirect to http://localhost:8080/oauth/authorize?response_type=code&client_id=6113de587eb4554f83407345&redirect_uri=http://www.baidu.com&scope=read&state=xyz
 ```
+
+
+![](./static/流程图.jpg)
