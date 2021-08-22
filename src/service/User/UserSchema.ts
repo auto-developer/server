@@ -1,6 +1,5 @@
 import {Schema} from 'mongoose'
-import {User} from "oauth2-server";
-import {GENDER, PLATFORM, USER_ROLE} from "./User";
+import {GENDER, PLATFORM, UserType, USER_ROLE} from "./User";
 import {mongoose} from "../../db";
 
 /**
@@ -16,7 +15,7 @@ import {mongoose} from "../../db";
  * @param definition.mobile 用户手机号码（唯一）
  * @param definition.mobileBindTime 手机号码绑定时间
  */
-const UserSchema = new Schema<User>({
+const UserSchema = new Schema<UserType>({
     username: {type: String, required: true, unique: true},
     nickname: {type: String, required: true, default: '二狗子'},
     registerSource: {
@@ -36,4 +35,4 @@ const UserSchema = new Schema<User>({
 }, {toObject: {virtuals: true}})
 
 
-export const UserModel = mongoose.model<User>('User', UserSchema)
+export const UserModel = mongoose.model<UserType>('User', UserSchema)

@@ -1,17 +1,17 @@
 import {Context, Next} from "koa";
-import {User} from "oauth2-server";
-import { UserModel } from "./UserSchema";
+import {UserType} from "./User";
+import {UserModel} from "./UserSchema";
+import {Falsey} from "oauth2-server";
 
-export const saveUser = async (user:User):Promise<User> => {
+export const saveUser = async (user: UserType): Promise<UserType | Falsey> => {
     const userInstance = new UserModel(user);
     const result = await userInstance.save();
-    return result.toObject()
+    return result.toObject<UserType>()
 }
 
-export const findUsers = async ():Promise<User[]> => {
-    const userDocuments = await UserModel.find();
-    const users = userDocuments.map(user => user.toObject())
-    return users
+export const findUserById = async (userId: string): Promise<UserType | Falsey> => {
+    const user = await UserModel.findById(userId)
+    return user?.toObject<UserType>()
 }
 
 export const getUsers = async (ctx: Context, next: Next) => {

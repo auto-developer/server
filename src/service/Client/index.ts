@@ -15,7 +15,6 @@ export const findClientById = async (clientId: string): Promise<Client | Falsey>
 }
 export const findClient = async (clientId: string, clientSecret: string): Promise<Client | Falsey> => {
     const client = await ClientModel.findById(clientId)
-    console.log(client, clientSecret)
     return client
 }
 

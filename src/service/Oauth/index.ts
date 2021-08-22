@@ -4,27 +4,45 @@ import {model} from './Oauth2Model'
 import {v4} from 'uuid'
 import {redis} from "../../db";
 import {findAuthenticationByIdentifier} from "../Authentication";
+import {findAuthorizeClientByUserAndClient} from "../AuthorizeClient";
+import {findUserById} from "../User";
 
 const oauth = new OAuth2Server({model})
 
 export const beforeGetAuthorize = async (ctx: Context, next: Next) => {
-    const {client_id} = ctx.request.query
+    const {client_id, redirect_uri, state, scope} = ctx.request.query
     if (!client_id || Array.isArray(client_id)) {
         throw Error();
     }
-    const query = new URLSearchParams({
-        client_id,
-        return_to: ctx.request.url
-    })
-    const session = ctx.cookies.get('user_session')
-    if (session) {
-        const user = await redis.get(session)
-        if (user) {
-            ctx.state.user = user
-            return await next()
-        }
+    const redirectWithQuery = (page: string) => {
+        const query = new URLSearchParams({
+            client_id: client_id,
+            return_to: ctx.request.url
+        })
+        ctx.cookies.set(`/user_session`, undefined)
+        return ctx.redirect(`/${page}?${query.toString()}`)
     }
-    ctx.redirect(`/sign-in?${query.toString()}`)
+    const session = ctx.cookies.get('user_session')
+    if (!session) return redirectWithQuery('sign-in')
+    const userId = await redis.get(session)
+    if (!userId) return redirectWithQuery('sign-in')
+    const user = await findUserById(userId)
+    if (!user) return redirectWithQuery('sign-in')
+
+    ctx.state.userId = userId
+    const authorizeClient = await findAuthorizeClientByUserAndClient(userId, client_id)
+    if (!authorizeClient) {
+        console.log(userId, user)
+        return ctx.render('authorize', {
+            client: {},
+            user,
+            client_id,
+            redirect_uri,
+            scope,
+            state
+        })
+    }
+    return await next()
 }
 
 export const getAuthorize = async (ctx: Context, next: Next) => {
@@ -32,13 +50,7 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
     const oauthResponse = new Response(ctx.response);
     const authenticateHandler = {
         handle: async (request: Request, response: Response) => {
-            console.log('authenticateHandler', request)
-            const session = ctx.cookies.get('user_session')
-            if (!session) {
-                return null
-            }
-            const userId = await redis.get(session)
-            return userId
+            return ctx.state.userId
         }
     }
     const options = {
@@ -50,21 +62,30 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
     ctx.status = oauthResponse.status || 500
     ctx.set(oauthResponse.headers || {})
     await next();
-
 }
 
 export const postSession = async (ctx: Context, next: Next) => {
     const {identifier, certificate, return_to, timestamp, timestamp_secret} = ctx.request.body
     const auth = await findAuthenticationByIdentifier(identifier, certificate)
+    console.log('-----', auth);
     if (!auth) {
-        return
+        return ctx.redirect('/sign-in')
     }
     const session = v4()
     await redis.set(session, auth.user.id)
     console.log(session)
     ctx.cookies.set('user_session', session)
-    ctx.redirect(return_to)
-    await next()
+    return ctx.redirect(return_to)
+}
+
+export const postAuthorize = async (ctx: Context, next: Next) => {
+    const {redirect_uri, client_id, state, authorize} = ctx.request.body
+    const query = new URLSearchParams({
+        client_id: client_id,
+        state: state
+    })
+    console.log('authorize', authorize)
+    return ctx.render('authorize-redirect', {redirect_uri})
 }
 
 export const postToken = async (ctx: Context, next: Next) => {

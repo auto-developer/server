@@ -1,8 +1,9 @@
 import {User} from "oauth2-server";
 
-export interface Authentication{
+export interface AuthenticationType{
     identityType: string;
     identifier: string;
     certificate: string;
     user: User;
 }
+
