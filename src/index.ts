@@ -14,5 +14,5 @@ databaseConnection()
         logger.info(`server listen at ${SERVICE_PORT}`);
     })
     .catch(e => {
-        console.error(e)
+        logger.error(e)
     })
