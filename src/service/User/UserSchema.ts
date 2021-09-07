@@ -1,7 +1,7 @@
 import {Schema} from 'mongoose'
 import {User} from "oauth2-server";
 import {GENDER, PLATFORM, USER_ROLE} from "./User";
-import {mongoose} from "../../db";
+import {mongoose} from "../../common/db";
 
 /**
  * UserSchema 用户基础信息

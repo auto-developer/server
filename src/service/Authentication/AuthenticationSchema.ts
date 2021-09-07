@@ -1,5 +1,5 @@
 import {Schema} from 'mongoose'
-import {mongoose} from "../../db";
+import {mongoose} from "../../common/db";
 import {PLATFORM} from "../User/User";
 import {Authentication} from "./Authentication";
 

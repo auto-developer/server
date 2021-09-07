@@ -1,6 +1,7 @@
 import app from './app';
 import {MONGO_URI, SERVICE_PORT} from "./config";
-import {mongoose} from "./db";
+import {mongoose} from "./common/db";
+import {logger} from "./common/logger";
 
 const databaseConnection = async () => {
     const mongodbConnection = mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -10,7 +11,7 @@ const databaseConnection = async () => {
 databaseConnection()
     .then(() => {
         app.listen(SERVICE_PORT);
-        console.log('server listen at', SERVICE_PORT);
+        logger.info(`server listen at ${SERVICE_PORT}`);
     })
     .catch(e => {
         console.error(e)
