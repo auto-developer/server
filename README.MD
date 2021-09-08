@@ -28,3 +28,24 @@ redirect to http://localhost:8080/oauth/authorize?response_type=code&client_id=6
 
 
 ![](./static/流程图.jpg)
+
+
+
+# KOA
+
+middleware 
+
+- getUsers
+- getUser
+- postUser
+- deleteUser
+- putUser
+- patchUser
+
+service
+
+- findUsers
+- findUserById
+- addUser
+- removeUser
+- updateUser

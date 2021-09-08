@@ -15,7 +15,7 @@ export const findUsers = async ():Promise<User[]> => {
 }
 
 export const getUsers = async (ctx: Context, next: Next) => {
-    ctx.body = []
+    const users = await findUsers()
+    ctx.body = users
     await next()
 }
-
