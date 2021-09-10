@@ -1,10 +1,11 @@
 import Router from 'koa-router';
 import {Context, DefaultState} from "koa";
-import {getUsers} from "../service/User";
+import {getUsers, postUser} from "../service/User";
 import {postClient} from "../service/Client";
 
 const user = new Router<DefaultState, Context>({prefix: '/users'})
     .get('/', getUsers)
+    .post('/', postUser)
 
 const client = new Router<DefaultState, Context>({prefix: '/clients'})
     .post('/', postClient)
