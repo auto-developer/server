@@ -1,9 +1,10 @@
 import {Context, Next} from "koa";
-import {User} from "oauth2-server";
+import {Falsey, User} from "oauth2-server";
 import {UserModel} from "./UserSchema";
 import {PaginationQuery} from "../../type";
+import {UserType} from "./User";
 
-export const addUser = async (user: User): Promise<User> => {
+export const addUser = async (user: UserType): Promise<UserType> => {
     const userInstance = new UserModel(user);
     const result = await userInstance.save();
     return result.toObject<UserType>()
@@ -16,6 +17,11 @@ export const findUsers = async (userFilter: Partial<User>, pagination: Paginatio
         .where(userFilter)
         .lean()
     return users
+}
+
+export const findUserById = async (uid: string): Promise<User | Falsey> => {
+    const user = await UserModel.findById(uid)
+    return user
 }
 
 export const getUsers = async (ctx: Context, next: Next) => {

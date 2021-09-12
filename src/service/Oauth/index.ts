@@ -85,7 +85,7 @@ export const postAuthorize = async (ctx: Context, next: Next) => {
         state: state
     })
     console.log('authorize', authorize)
-    return ctx.render('authorize-redirect', {redirect_uri})
+    // return ctx.render('authorize-redirect', {redirect_uri})
 }
 
 export const postToken = async (ctx: Context, next: Next) => {
