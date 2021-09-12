@@ -1,5 +1,5 @@
 import {Schema} from 'mongoose'
-import {mongoose} from "../../db";
+import {mongoose} from "../../common/db";
 import {AuthorizeClient} from "./AuthorizeClient";
 
 const AuthorizeClientSchema = new Schema<AuthorizeClient>({
