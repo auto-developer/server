@@ -1,5 +1,5 @@
 import {Schema} from "mongoose";
-import {mongoose} from '../../db'
+import {mongoose} from '../../common/db'
 import {ClientType} from "./Client";
 
 /**

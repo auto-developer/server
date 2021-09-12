@@ -2,9 +2,9 @@
   "name": "user-service",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "node src/index.js",
     "dev": "nodemon npm start",
     "tsc": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -40,6 +40,7 @@
     "oauth2-server": "^3.1.1",
     "sequelize": "^6.6.5",
     "tailwindcss": "^2.2.7",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "winston": "^3.3.3"
   }
 }

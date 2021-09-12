@@ -2,7 +2,7 @@ import OAuth2Server, {Request, Response} from 'oauth2-server'
 import {Context, Next} from "koa";
 import {model} from './Oauth2Model'
 import {v4} from 'uuid'
-import {redis} from "../../db";
+import {redis} from "../../common/db";
 import {findAuthenticationByIdentifier} from "../Authentication";
 import {findAuthorizeClientByUserAndClient} from "../AuthorizeClient";
 import {findUserById} from "../User";

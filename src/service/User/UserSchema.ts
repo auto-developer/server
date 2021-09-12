@@ -1,6 +1,6 @@
 import {Schema} from 'mongoose'
 import {GENDER, PLATFORM, UserType, USER_ROLE} from "./User";
-import {mongoose} from "../../db";
+import {mongoose} from "../../common/db";
 
 /**
  * UserSchema 用户基础信息

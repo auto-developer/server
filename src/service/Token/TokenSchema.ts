@@ -1,6 +1,6 @@
 import {model, Schema} from 'mongoose'
 import {RefreshToken, Token} from "oauth2-server";
-import {mongoose} from "../../db";
+import {mongoose} from "../../common/db";
 
 /**
  * token    Object    The token(s) to be saved.

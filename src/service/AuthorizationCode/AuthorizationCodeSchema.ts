@@ -1,6 +1,6 @@
 import {Schema} from 'mongoose'
 import {AuthorizationCode} from "oauth2-server";
-import {mongoose} from "../../db";
+import {mongoose} from "../../common/db";
 
 /**
  * code	Object	The return value.
