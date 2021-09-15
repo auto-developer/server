@@ -2,7 +2,15 @@ import {Mongoose} from 'mongoose'
 import {Sequelize} from 'sequelize';
 import Redis from 'ioredis'
 import fs from 'fs';
-import {MYSQL_DATABASE, MYSQL_HOST, MYSQL_PASSWORD, MYSQL_PORT, MYSQL_USERNAME} from '../config';
+import {
+    MYSQL_DATABASE,
+    MYSQL_HOST,
+    MYSQL_PASSWORD,
+    MYSQL_PORT,
+    MYSQL_USERNAME,
+    REDIS_HOST,
+    REDIS_PORT
+} from '../config';
 import {logger} from "./logger";
 
 logger.info(`MYSQL_PORT:${MYSQL_PORT}`)
@@ -28,4 +36,7 @@ export const sequelize = new Sequelize({
 
 export const mongoose = new Mongoose()
 
-export const redis = new Redis()
+export const redis = new Redis({
+    port: REDIS_PORT,
+    host: REDIS_HOST
+})

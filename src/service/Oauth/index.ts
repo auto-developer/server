@@ -1,11 +1,10 @@
 import OAuth2Server, {Request, Response} from 'oauth2-server'
 import {Context, Next} from "koa";
 import {model} from './Oauth2Model'
-import {v4} from 'uuid'
-import {redis} from "../../common/db";
 import {findAuthenticationByIdentifier} from "../Authentication";
 import {findAuthorizeClientByUserAndClient} from "../AuthorizeClient";
 import {findUserById} from "../User";
+import {getSession, setSession} from "../Session";
 
 const oauth = new OAuth2Server({model})
 
@@ -22,9 +21,9 @@ export const beforeGetAuthorize = async (ctx: Context, next: Next) => {
         ctx.cookies.set(`/user_session`, undefined)
         return ctx.redirect(`/${page}?${query.toString()}`)
     }
-    const session = ctx.cookies.get('user_session')
-    if (!session) return redirectWithQuery('sign-in')
-    const userId = await redis.get(session)
+    const sessionId = ctx.cookies.get('user_session')
+    if (!sessionId) return redirectWithQuery('sign-in')
+    const userId = await getSession(sessionId)
     if (!userId) return redirectWithQuery('sign-in')
     const user = await findUserById(userId)
     if (!user) return redirectWithQuery('sign-in')
@@ -67,13 +66,10 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
 export const postSession = async (ctx: Context, next: Next) => {
     const {identifier, certificate, return_to, timestamp, timestamp_secret} = ctx.request.body
     const auth = await findAuthenticationByIdentifier(identifier, certificate)
-    console.log('-----', auth);
     if (!auth) {
         return ctx.redirect('/sign-in')
     }
-    const session = v4()
-    await redis.set(session, auth.user.id)
-    console.log(session)
+    const session = await setSession(auth.user.id)
     ctx.cookies.set('user_session', session)
     return ctx.redirect(return_to)
 }
