@@ -12,6 +12,7 @@ const oauth = new Router<DefaultState, Context>()
     .post('/token', postToken)
 
     .get('/', async (ctx: Context, next: Next) => {
+        ctx.assert('', 401, 'assert error')
         const sessionId = ctx.cookies.get('user_session')
         if (sessionId) {
             const userId = await getSession(sessionId)

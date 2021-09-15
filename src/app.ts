@@ -22,4 +22,11 @@ app.use(koaBody({multipart: true}));
 app.use(router.routes());
 app.use(router.allowedMethods());
 
+// app.on('error', (err, ctx) => {
+//     console.log(err)
+//     console.log(ctx)
+//     console.log('-----------')
+//     ctx.render('404')
+// })
+
 export default app;
