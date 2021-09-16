@@ -8,7 +8,10 @@ export const MYSQL_DATABASE = process.env.MYSQL_DATABASE || 'test';
 export const MYSQL_PORT = Number(process.env.MYSQL_PORT) || 3306;
 export const MYSQL_HOST = process.env.MYSQL_HOST || '127.0.0.1';
 
-export const MONGO_URI = "mongodb://localhost:27017/test"
+export const MONGO_HOST = process.env.MONGO_HOST || '127.0.0.1';
+export const MONGO_PORT = Number(process.env.MONGO_PORT) || 27017;
+export const MONGO_DATABASE = process.env.MONGO_DATABASE || 'test';
+export const MONGO_URI = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}`
 
 export const REDIS_HOST = process.env.REDIS_HOST || '127.0.0.1';
 export const REDIS_PORT = Number(process.env.REDIS_PORT) || 6379;
