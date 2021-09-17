@@ -11,11 +11,11 @@ export const userSessionHandler = async (ctx: Context, next: Next) => {
         return ctx.redirect(`/${page}?${query.toString()}`)
     }
     const sessionId = ctx.cookies.get('user_session')
-    if (!sessionId) return redirectWithQuery('sign-in')
+    if (!sessionId) return redirectWithQuery('session')
     const userId = await getSession(sessionId)
-    if (!userId) return redirectWithQuery('sign-in')
+    if (!userId) return redirectWithQuery('session')
     const user = await findUserById(userId)
-    if (!user) return redirectWithQuery('sign-in')
+    if (!user) return redirectWithQuery('session')
 
     ctx.state.userId = userId
     await next()

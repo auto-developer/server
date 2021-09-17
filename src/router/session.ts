@@ -12,13 +12,13 @@ session.get('/session', async (ctx: Context, next: Next) => {
         client = await findClientById(client_id)
     }
     ctx.state = {client_id, client_secret: client && client?.key, client, return_to}
-    await ctx.render('sign-in')
+    await ctx.render('session')
     await next()
 })
     .post('/session', async (ctx: Context, next: Next) => {
         const {identifier, certificate, return_to, timestamp, timestamp_secret} = ctx.request.body
         const auth = await findAuthenticationByIdentifier(identifier, certificate)
-        if (!auth) return ctx.redirect('/sign-in')
+        if (!auth) return ctx.redirect('/session')
         const session = await setSession(auth.user.id)
         ctx.cookies.set('user_session', session)
         await ctx.redirect(return_to)

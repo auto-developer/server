@@ -18,7 +18,9 @@ application
         await next()
     })
     .post('/application', userSessionHandler, async (ctx: Context, next: Next) => {
-        const {return_to, client_id} = ctx.request.body
+        const {return_to} = ctx.request.query
+        ctx.assert(typeof return_to === 'string', 401)
+        const {client_id} = ctx.request.body
         const {userId} = ctx.state
         console.log(ctx.state);
         const authorizeClient = await saveApplication({

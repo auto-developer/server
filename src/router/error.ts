@@ -7,7 +7,7 @@ export const pageErrorHandler = async (ctx: Context, next: Next) => {
         switch (e.status) {
             case 401:
                 ctx.status = e.status
-                await ctx.render('sign-in')
+                await ctx.render('session')
                 break
             case 404:
                 ctx.status = e.status
