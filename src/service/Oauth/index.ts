@@ -1,48 +1,9 @@
 import OAuth2Server, {Request, Response} from 'oauth2-server'
 import {Context, Next} from "koa";
 import {model} from './Oauth2Model'
-import {findAuthenticationByIdentifier} from "../Authentication";
-import {findAuthorizeClientByUserAndClient} from "../AuthorizeClient";
-import {findUserById} from "../User";
-import {getSession, setSession} from "../Session";
 
 const oauth = new OAuth2Server({model})
 
-export const beforeGetAuthorize = async (ctx: Context, next: Next) => {
-    const {client_id, redirect_uri, state, scope} = ctx.request.query
-    if (!client_id || Array.isArray(client_id)) {
-        throw Error();
-    }
-    const redirectWithQuery = (page: string) => {
-        const query = new URLSearchParams({
-            client_id: client_id,
-            return_to: ctx.request.url
-        })
-        ctx.cookies.set(`/user_session`, undefined)
-        return ctx.redirect(`/${page}?${query.toString()}`)
-    }
-    const sessionId = ctx.cookies.get('user_session')
-    if (!sessionId) return redirectWithQuery('sign-in')
-    const userId = await getSession(sessionId)
-    if (!userId) return redirectWithQuery('sign-in')
-    const user = await findUserById(userId)
-    if (!user) return redirectWithQuery('sign-in')
-
-    ctx.state.userId = userId
-    const authorizeClient = await findAuthorizeClientByUserAndClient(userId, client_id)
-    if (!authorizeClient) {
-        console.log(userId, user)
-        return ctx.render('authorize', {
-            client: {},
-            user,
-            client_id,
-            redirect_uri,
-            scope,
-            state
-        })
-    }
-    return await next()
-}
 
 export const getAuthorize = async (ctx: Context, next: Next) => {
     const oauthRequest = new Request(ctx.request);
@@ -61,27 +22,6 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
     ctx.status = oauthResponse.status || 500
     ctx.set(oauthResponse.headers || {})
     await next();
-}
-
-export const postSession = async (ctx: Context, next: Next) => {
-    const {identifier, certificate, return_to, timestamp, timestamp_secret} = ctx.request.body
-    const auth = await findAuthenticationByIdentifier(identifier, certificate)
-    if (!auth) {
-        return ctx.redirect('/sign-in')
-    }
-    const session = await setSession(auth.user.id)
-    ctx.cookies.set('user_session', session)
-    return ctx.redirect(return_to)
-}
-
-export const postAuthorize = async (ctx: Context, next: Next) => {
-    const {redirect_uri, client_id, state, authorize} = ctx.request.body
-    const query = new URLSearchParams({
-        client_id: client_id,
-        state: state
-    })
-    console.log('authorize', authorize)
-    return ctx.render('authorize-redirect', {redirect_uri})
 }
 
 export const postToken = async (ctx: Context, next: Next) => {
