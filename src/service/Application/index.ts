@@ -3,7 +3,9 @@ import {Application} from "./Application";
 import {Falsey} from "oauth2-server";
 
 export const findApplicationByUserAndClient = async (userId: string, clientId: string): Promise<Application | Falsey> => {
-    return null
+    return ApplicationModel.findOne({
+        user:userId, client:clientId
+    })
 }
 
 export const saveApplication = async (application: Application) => {

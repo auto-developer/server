@@ -12,7 +12,7 @@ export const beforeGetAuthorize = async (ctx: Context, next: Next): Promise<void
     }
     const {userId} = ctx.state
     const authorizeClient = await findApplicationByUserAndClient(userId, client_id)
-    if (!authorizeClient) return ctx.redirect(`/authorize-client?client_id=${client_id}&return_to=${ctx.request.url}`)
+    if (!authorizeClient) return ctx.redirect(`/application?client_id=${client_id}&return_to=${ctx.request.url}`)
     await next()
 }
 
