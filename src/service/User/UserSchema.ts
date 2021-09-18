@@ -32,6 +32,7 @@ const UserSchema = new Schema<UserType>({
     emailBindTime: {type: Date},
     mobile: {type: String, unique: true},
     mobileBindTime: {type: Date},
+    applications: {type: [Schema.Types.ObjectId], ref: 'Client'}
 }, {toObject: {virtuals: true}})
 
 

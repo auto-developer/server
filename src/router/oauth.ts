@@ -1,9 +1,9 @@
 import Router from "koa-router";
 import {Context, DefaultState, Next} from "koa";
 import {getAuthorize, postToken} from "../service/Oauth";
-import {findApplicationByUserAndClient} from "../service/Application";
 import {userSessionHandler} from "./userSession";
 import {pageErrorHandler} from "./error";
+import {findUserApplicationsById} from "../service/User";
 
 export const beforeGetAuthorize = async (ctx: Context, next: Next): Promise<void> => {
     const {client_id} = ctx.request.query
@@ -11,8 +11,11 @@ export const beforeGetAuthorize = async (ctx: Context, next: Next): Promise<void
         throw Error();
     }
     const {userId} = ctx.state
-    const authorizeClient = await findApplicationByUserAndClient(userId, client_id)
-    if (!authorizeClient) return ctx.redirect(`/application?client_id=${client_id}&return_to=${ctx.request.url}`)
+    const userWithApplications = await findUserApplicationsById(userId)
+    ctx.assert(userWithApplications, 401)
+    console.log('-----', client_id, ctx.request.url);
+    console.log(Array.isArray(userWithApplications.applications));
+    if (!userWithApplications.applications.includes(client_id)) return ctx.redirect(`/application?client_id=${client_id}&return_to=${ctx.request.url}`)
     await next()
 }
 

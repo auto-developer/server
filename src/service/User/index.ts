@@ -1,4 +1,3 @@
-import {Context, Next} from "koa";
 import {Falsey, User} from "oauth2-server";
 import {UserModel} from "./UserSchema";
 import {PaginationQuery} from "../../type";
@@ -10,7 +9,7 @@ export const addUser = async (user: UserType): Promise<UserType> => {
     return result.toObject<UserType>()
 }
 
-export const findUsers = async (userFilter: Partial<User>, pagination: PaginationQuery): Promise<User[]> => {
+export const findUsers = async (userFilter: Partial<User>, pagination: PaginationQuery): Promise<UserType[]> => {
     const users = await UserModel.find()
         .skip(pagination.page * pagination.size)
         .limit(pagination.size)
@@ -19,30 +18,12 @@ export const findUsers = async (userFilter: Partial<User>, pagination: Paginatio
     return users
 }
 
-export const findUserById = async (uid: string): Promise<User | Falsey> => {
+export const findUserById = async (uid: string): Promise<UserType | Falsey> => {
     const user = await UserModel.findById(uid)
     return user
 }
 
-export const getUsers = async (ctx: Context, next: Next) => {
-    const {page, size} = ctx.request.query
-    const userFilter = ctx.request.query
-    const pagination = {page: Number(page), size: Number(size)}
-    const users = await findUsers(userFilter, pagination)
-    ctx.body = {
-        data: users,
-        pagination: {
-            page: page,
-            size: size,
-            total: 0
-        }
-    }
-    await next()
-}
-
-export const postUser = async (ctx: Context, next: Next) => {
-    const userParam = ctx.request.body
-    const userInstance = await addUser(userParam)
-    ctx.status = 201
-    ctx.body = userInstance
+export const findUserApplicationsById = async (uid: string) : Promise<UserType | Falsey> => {
+    const user = await UserModel.findById(uid)
+    return user
 }
