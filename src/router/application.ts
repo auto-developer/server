@@ -1,7 +1,7 @@
 import Router from "koa-router";
 import {Context, DefaultState, Next} from "koa";
 import {findClientById} from "../service/Client";
-import {userSessionHandler} from "./userSession";
+import {userSessionHandler} from "./handler";
 import {findUserApplicationsById} from "../service/User";
 
 const application = new Router<DefaultState, Context>()
