@@ -2,6 +2,8 @@ import Router from 'koa-router';
 import {Context, DefaultState, Next} from "koa";
 import {addUser, findUsers} from "../service/User";
 import {postClient} from "../service/Client";
+import {authenticate} from "./oauth";
+
 
 
 export const getUsers = async (ctx: Context, next: Next) => {
@@ -36,6 +38,8 @@ const client = new Router<DefaultState, Context>({prefix: '/clients'})
 
 
 const router = new Router<DefaultState, Context>({prefix: '/api'});
+router.use(authenticate)
+router.use(user.routes());
 router.use(user.routes());
 router.use(client.routes())
 

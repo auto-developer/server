@@ -1,4 +1,4 @@
-import {
+import OAuth2Server, {
     AuthorizationCode,
     AuthorizationCodeModel,
     Falsey,
@@ -8,12 +8,12 @@ import {
     Token,
     User
 } from "oauth2-server";
-import {findClient} from '../Client';
-import {getCodeByAuthorizationCode, saveCode} from '../AuthorizationCode';
-import {deleteToken, findRefreshToken, findToken, saveToken} from '../Token';
-import {findAuthenticationByIdentifier} from '../Authentication';
+import {findClient} from '../service/Client';
+import {getCodeByAuthorizationCode, saveCode} from '../service/AuthorizationCode';
+import {deleteToken, findRefreshToken, findToken, saveToken} from '../service/Token';
+import {findAuthenticationByIdentifier} from '../service/Authentication';
 
-export const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
+const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
 
     /**
      * request authentication
@@ -107,3 +107,6 @@ export const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel =
         return removeResult;
     },
 }
+
+export const server = new OAuth2Server({model})
+
