@@ -1,12 +1,11 @@
 import Router from 'koa-router';
 import {Context, DefaultState, Next} from "koa";
-import {addUser, findUsers} from "../service/User";
+import {addUser, findUserById, findUsers} from "../service/User";
 import {postClient} from "../service/Client";
 import {authenticate} from "./oauth";
+import {userSessionHandler} from "./middleware/handler";
 
-
-
-export const getUsers = async (ctx: Context, next: Next) => {
+const getUsers = async (ctx: Context, next: Next) => {
     const {page, size} = ctx.request.query
     const userFilter = ctx.request.query
     const pagination = {page: Number(page), size: Number(size)}
@@ -22,24 +21,33 @@ export const getUsers = async (ctx: Context, next: Next) => {
     await next()
 }
 
-export const postUser = async (ctx: Context, next: Next) => {
+const postUsers = async (ctx: Context, next: Next) => {
     const userParam = ctx.request.body
     const userInstance = await addUser(userParam)
     ctx.status = 201
     ctx.body = userInstance
 }
 
-const user = new Router<DefaultState, Context>({prefix: '/users'})
+const getUser = async (ctx: Context, next: Next) => {
+    const {userId} = ctx.state
+    const user = await findUserById(userId)
+    ctx.body = user
+    await next()
+}
+
+const users = new Router<DefaultState, Context>({prefix: '/users'})
     .get('/', getUsers)
-    .post('/', postUser)
+    .post('/', postUsers)
+
+const user = new Router<DefaultState, Context>()
+    .get('/user', userSessionHandler, getUser)
 
 const client = new Router<DefaultState, Context>({prefix: '/clients'})
     .post('/', postClient)
 
-
 const router = new Router<DefaultState, Context>({prefix: '/api'});
 router.use(authenticate)
-router.use(user.routes());
+router.use(users.routes());
 router.use(user.routes());
 router.use(client.routes())
 
