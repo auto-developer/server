@@ -1,7 +1,7 @@
 import Router from "koa-router";
 import {Context, DefaultState, Next} from "koa";
-import {userSessionHandler} from "./handler";
-import {pageErrorHandler} from "./error";
+import {userSessionHandler} from "./middleware/handler";
+import {pageErrorHandler} from "./middleware/error";
 import {findUserApplicationsById} from "../service/User";
 import {Request, Response} from "oauth2-server";
 import {server} from "../common/oauth"

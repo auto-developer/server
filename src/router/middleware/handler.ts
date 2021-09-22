@@ -1,6 +1,6 @@
 import {Context, Next} from "koa";
-import {getSession} from "../service/Session";
-import {findUserById} from "../service/User";
+import {getSession} from "../../service/Session";
+import {findUserById} from "../../service/User";
 
 export const userSessionHandler = async (ctx: Context, next: Next) => {
     const redirectWithQuery = (page: string) => {

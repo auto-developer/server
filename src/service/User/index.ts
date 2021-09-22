@@ -20,7 +20,7 @@ export const findUsers = async (userFilter: Partial<User>, pagination: Paginatio
 
 export const findUserById = async (uid: string): Promise<UserType | Falsey> => {
     const user = await UserModel.findById(uid)
-    return user
+    return user?.toObject<UserType>()
 }
 
 export const findUserApplicationsById = async (uid: string) : Promise<UserType | Falsey> => {
