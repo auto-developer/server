@@ -2,9 +2,8 @@ import Router from 'koa-router';
 import {Context, DefaultState, Next} from "koa";
 import {addUser, findUsers} from "../service/User";
 import {findClientById, findClients, saveClient} from "../service/Client";
-import {authenticate} from "./oauth";
 import {Client} from "oauth2-server";
-import exp from "constants";
+import {authenticate} from "./middleware/handler";
 
 const getUsers = async (ctx: Context, next: Next) => {
     const {page, size} = ctx.request.query

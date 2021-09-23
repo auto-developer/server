@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import {Context, DefaultState} from "koa";
+import {Context, DefaultState, Next} from "koa";
 import api from './api'
 import oauth from "./oauth";
 import session from "./session";
@@ -11,5 +11,9 @@ router.use(api.routes())
 router.use(oauth.routes())
 router.use(session.routes())
 router.use(application.routes())
+router.get('/', async (ctx: Context, next: Next) => {
+    await ctx.render('index')
+    await next()
+})
 
 export default router;

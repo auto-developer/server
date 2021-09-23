@@ -6,7 +6,8 @@ export const logger = winston.createLogger({
     //日志等级定义，默认为自带等级设定
     levels: winston.config.npm.levels,
     //对输出信息进行格式化
-    format: winston.format.json(),
+    format: winston.format.simple(),
+    defaultMeta: { service: 'user-service' },
     //日志信息输出到哪里，例如某个文件或者命令行,默认[]
     transports: [
         new winston.transports.Console(),

@@ -56,36 +56,10 @@ export const postToken = async (ctx: Context, next: Next) => {
     await next();
 }
 
-export const authenticate = async (ctx: Context, next: Next) => {
-    const oauthRequest = new Request(ctx.request);
-    const oauthResponse = new Response(ctx.response);
-    const {scope} = ctx.request.body;
-    try {
-        const token = await server.authenticate(oauthRequest, oauthResponse, {
-            scope: scope
-        })
-        ctx.state.token = token;
-        ctx.state.user = token.user;
-        ctx.body = oauthResponse.body;
-        ctx.status = oauthResponse.status || 500;
-        ctx.set(oauthResponse.headers || {});
-        await next();
-    } catch (e) {
-        ctx.status = e.code;
-        ctx.body = {error: e.name, error_description: e.message}
-    }
-}
-
 
 const oauth = new Router<DefaultState, Context>()
     .use(pageErrorHandler)
     .get('/authorize', userSessionHandler, beforeGetAuthorize, getAuthorize)
     .post('/token', postToken)
-
-    .get('/', async (ctx: Context, next: Next) => {
-        await ctx.render('index')
-        await next()
-    })
-
 
 export default oauth
