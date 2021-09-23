@@ -1,7 +1,7 @@
 import {Mongoose} from 'mongoose'
 import {Sequelize} from 'sequelize';
 import Redis from 'ioredis'
-import fs from 'fs';
+
 import {
     MYSQL_DATABASE,
     MYSQL_HOST,
@@ -19,8 +19,6 @@ logger.info(`MYSQL_PASSWORD:${MYSQL_PASSWORD}`)
 logger.info(`MYSQL_HOST:${MYSQL_HOST}`)
 logger.info(`MYSQL_DATABASE:${MYSQL_DATABASE}`)
 
-const logStream = fs.createWriteStream('./sql.log', {'flags': 'a'});
-
 export const sequelize = new Sequelize({
     dialect: 'mysql',
     host: MYSQL_HOST,
@@ -31,7 +29,7 @@ export const sequelize = new Sequelize({
     define: {
         freezeTableName: true,
     },
-    logging: msg => logStream.write(msg + '\n'),
+    logging: logger.info,
 });
 
 export const mongoose = new Mongoose()

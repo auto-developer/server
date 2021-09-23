@@ -5,6 +5,7 @@ import {pageErrorHandler} from "./middleware/error";
 import {findUserApplicationsById} from "../service/User";
 import {Request, Response} from "oauth2-server";
 import {server} from "../common/oauth"
+import {logger} from "../common/logger";
 
 export const beforeGetAuthorize = async (ctx: Context, next: Next): Promise<void> => {
     const {client_id} = ctx.request.query
@@ -14,7 +15,6 @@ export const beforeGetAuthorize = async (ctx: Context, next: Next): Promise<void
     const {userId} = ctx.state
     const userWithApplications = await findUserApplicationsById(userId)
     ctx.assert(userWithApplications, 401)
-    console.log('-----', client_id, ctx.request.url);
     console.log(Array.isArray(userWithApplications.applications));
     if (!userWithApplications.applications.includes(client_id)) return ctx.redirect(`/application?client_id=${client_id}&return_to=${ctx.request.url}`)
     await next()
@@ -49,7 +49,7 @@ export const postToken = async (ctx: Context, next: Next) => {
         ctx.status = oauthResponse.status || 500
         ctx.set(oauthResponse.headers || {});
     } catch (e) {
-        console.log(e)
+        logger.error(e)
         ctx.body = {error: e.name, error_description: e.message};
         ctx.status = e.code;
     }
@@ -65,8 +65,6 @@ export const authenticate = async (ctx: Context, next: Next) => {
             scope: scope
         })
         ctx.state.token = token;
-        console.log('--------')
-        console.log(token.user)
         ctx.state.user = token.user;
         ctx.body = oauthResponse.body;
         ctx.status = oauthResponse.status || 500;

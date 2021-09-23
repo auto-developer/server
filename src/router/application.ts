@@ -20,12 +20,10 @@ application
     .post('/application', userSessionHandler, async (ctx: Context, next: Next) => {
         const {client_id, return_to} = ctx.request.body
         const {userId} = ctx.state
-        console.log(ctx.state);
         const userWithApplications = await findUserApplicationsById(userId)
         ctx.assert(userWithApplications, 401)
         userWithApplications.applications.push(client_id)
         await userWithApplications.save()
-        console.log('save client', return_to, client_id)
         await ctx.redirect(return_to)
         await next()
     })

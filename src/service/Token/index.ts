@@ -16,7 +16,6 @@ export const findToken = async (accessToken: string): Promise<Token | Falsey> =>
 export const findRefreshToken = async (refreshToken: string): Promise<RefreshToken | Falsey> => {
     const tokenInstance = await RefreshTokenModel.findOne({refreshToken})
         .populate('client')
-    console.log("debug::", refreshToken, tokenInstance)
     return tokenInstance;
 }
 

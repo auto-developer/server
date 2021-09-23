@@ -1,9 +1,10 @@
 import Router from 'koa-router';
 import {Context, DefaultState, Next} from "koa";
 import {addUser, findUsers} from "../service/User";
-import {findClients, saveClient} from "../service/Client";
+import {findClientById, findClients, saveClient} from "../service/Client";
 import {authenticate} from "./oauth";
 import {Client} from "oauth2-server";
+import exp from "constants";
 
 const getUsers = async (ctx: Context, next: Next) => {
     const {page, size} = ctx.request.query
@@ -49,9 +50,15 @@ export const getClients = async (ctx: Context, next: Next): Promise<void> => {
     await next()
 }
 
+export const getClient = async (ctx:Context, next:Next): Promise<void> => {
+    const {clientId} = ctx.params
+    const client = await findClientById(clientId)
+    ctx.body = client
+    await next()
+}
+
 export const postClient = async (ctx: Context, next: Next): Promise<void> => {
     const clientParam: Omit<Client, 'id'> = ctx.request.body
-    console.log(ctx.request.body)
     ctx.body = await saveClient(clientParam)
     await next()
 }
@@ -65,6 +72,7 @@ const user = new Router<DefaultState, Context>({prefix: '/user'})
 
 const clients = new Router<DefaultState, Context>({prefix: '/clients'})
     .get('/', getClients)
+    .get('/:clientId', getClient)
     .post('/', postClient)
 
 const router = new Router<DefaultState, Context>({prefix: '/api'});
