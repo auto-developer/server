@@ -33,7 +33,6 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
         authenticateHandler: authenticateHandler,
     }
     const code = await server.authorize(oauthRequest, oauthResponse, options)
-    console.log('code:', code)
     ctx.body = oauthResponse.body
     ctx.status = oauthResponse.status || 500
     ctx.set(oauthResponse.headers || {})
@@ -66,6 +65,8 @@ export const authenticate = async (ctx: Context, next: Next) => {
             scope: scope
         })
         ctx.state.token = token;
+        console.log('--------')
+        console.log(token.user)
         ctx.state.user = token.user;
         ctx.body = oauthResponse.body;
         ctx.status = oauthResponse.status || 500;

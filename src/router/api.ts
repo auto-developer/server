@@ -3,7 +3,6 @@ import {Context, DefaultState, Next} from "koa";
 import {addUser, findUserById, findUsers} from "../service/User";
 import {postClient} from "../service/Client";
 import {authenticate} from "./oauth";
-import {userSessionHandler} from "./middleware/handler";
 
 const getUsers = async (ctx: Context, next: Next) => {
     const {page, size} = ctx.request.query
@@ -29,9 +28,7 @@ const postUsers = async (ctx: Context, next: Next) => {
 }
 
 const getUser = async (ctx: Context, next: Next) => {
-    const {userId} = ctx.state
-    const user = await findUserById(userId)
-    ctx.body = user
+    ctx.body = ctx.state.user
     await next()
 }
 
@@ -40,7 +37,7 @@ const users = new Router<DefaultState, Context>({prefix: '/users'})
     .post('/', postUsers)
 
 const user = new Router<DefaultState, Context>()
-    .get('/user', userSessionHandler, getUser)
+    .get('/user', getUser)
 
 const client = new Router<DefaultState, Context>({prefix: '/clients'})
     .post('/', postClient)
