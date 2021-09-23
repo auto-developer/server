@@ -1,6 +1,7 @@
 import OAuth2Server, {
     AuthorizationCode,
     AuthorizationCodeModel,
+    Client,
     Falsey,
     PasswordModel,
     RefreshToken,
@@ -82,6 +83,12 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
      */
     revokeAuthorizationCode: async (code: AuthorizationCode): Promise<boolean> => {
         return true
+    },
+
+    validateScope: async (user: User, client: Client, scope: string | string[]): Promise<string | string[] | Falsey> => {
+        console.log('user, client,scope')
+        console.log(user, client, scope)
+        return scope
     },
 
     /**
