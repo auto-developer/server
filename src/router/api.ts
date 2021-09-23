@@ -1,8 +1,9 @@
 import Router from 'koa-router';
 import {Context, DefaultState, Next} from "koa";
-import {addUser, findUserById, findUsers} from "../service/User";
-import {postClient} from "../service/Client";
+import {addUser, findUsers} from "../service/User";
+import {findClients, saveClient} from "../service/Client";
 import {authenticate} from "./oauth";
+import {Client} from "oauth2-server";
 
 const getUsers = async (ctx: Context, next: Next) => {
     const {page, size} = ctx.request.query
@@ -32,20 +33,44 @@ const getUser = async (ctx: Context, next: Next) => {
     await next()
 }
 
+export const getClients = async (ctx: Context, next: Next): Promise<void> => {
+    const {page, size} = ctx.request.query
+    const userFilter = ctx.request.query
+    const pagination = {page: Number(page), size: Number(size)}
+    const clients = await findClients(userFilter, pagination)
+    ctx.body = {
+        data: clients,
+        pagination: {
+            page: page,
+            size: size,
+            total: 0
+        }
+    }
+    await next()
+}
+
+export const postClient = async (ctx: Context, next: Next): Promise<void> => {
+    const clientParam: Omit<Client, 'id'> = ctx.request.body
+    console.log(ctx.request.body)
+    ctx.body = await saveClient(clientParam)
+    await next()
+}
+
 const users = new Router<DefaultState, Context>({prefix: '/users'})
     .get('/', getUsers)
     .post('/', postUsers)
 
-const user = new Router<DefaultState, Context>()
-    .get('/user', getUser)
+const user = new Router<DefaultState, Context>({prefix: '/user'})
+    .get('/', getUser)
 
-const client = new Router<DefaultState, Context>({prefix: '/clients'})
+const clients = new Router<DefaultState, Context>({prefix: '/clients'})
+    .get('/', getClients)
     .post('/', postClient)
 
 const router = new Router<DefaultState, Context>({prefix: '/api'});
 router.use(authenticate)
 router.use(users.routes());
 router.use(user.routes());
-router.use(client.routes())
+router.use(clients.routes())
 
 export default router;

@@ -1,7 +1,7 @@
 import {Client, Falsey} from "oauth2-server";
 import {ClientModel} from "./ClientSchema";
-import {Context, Next} from "koa";
 import {ClientType} from "./Client";
+import {PaginationQuery} from "../../type";
 
 export const saveClient = async (client: Omit<Client, 'id'>): Promise<Client> => {
     const clientInstance = new ClientModel(client);
@@ -13,14 +13,16 @@ export const findClientById = async (clientId: string): Promise<Client | Falsey>
     const client = await ClientModel.findById(clientId)
     return client?.toObject<ClientType>()
 }
-export const findClient = async (clientId: string, clientSecret: string): Promise<Client | Falsey> => {
+export const findClientByClientIdClientSecret = async (clientId: string, clientSecret: string): Promise<Client | Falsey> => {
     const client = await ClientModel.findById(clientId)
     return client
 }
 
-export const postClient = async (ctx: Context, next: Next): Promise<void> => {
-    const clientParam: Omit<Client, 'id'> = ctx.request.body
-    console.log(ctx.request.body)
-    ctx.body = await saveClient(clientParam)
-    await next()
+export const findClients = async (clientFilter: Partial<ClientType>, pagination: PaginationQuery): Promise<ClientType[]> => {
+    const clients = await ClientModel.find()
+        .skip(pagination.page * pagination.size)
+        .limit(pagination.size)
+        .where(clientFilter)
+        .lean()
+    return clients
 }
