@@ -23,7 +23,14 @@ export const findUserById = async (uid: string): Promise<UserType | Falsey> => {
     return user?.toObject<UserType>()
 }
 
-export const findUserApplicationsById = async (uid: string) : Promise<UserType | Falsey> => {
+export const findUserByUsername = async (username: string): Promise<UserType | Falsey> => {
+    const user = await UserModel.findOne({
+        username
+    })
+    return user?.toObject<UserType>()
+}
+
+export const findUserApplicationsById = async (uid: string): Promise<UserType | Falsey> => {
     const user = await UserModel.findById(uid)
     return user
 }
