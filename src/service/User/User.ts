@@ -8,5 +8,6 @@ export enum GENDER {'male' = 'male', 'female' = 'female'}
 
 export interface UserType extends User {
     avatar: string;
-    applications: Client
+    applications: Client;
+    registerSource: PLATFORM;
 }

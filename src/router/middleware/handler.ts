@@ -28,19 +28,16 @@ export const authenticate = async (ctx: Context, next: Next) => {
     const oauthRequest = new Request(ctx.request);
     const oauthResponse = new Response(ctx.response);
     const {scope} = ctx.request.body;
-    try {
-        const token = await server.authenticate(oauthRequest, oauthResponse, {
-            scope: scope
-        })
-        ctx.state.token = token;
-        ctx.state.user = token.user;
-        logger.info(token)
-        ctx.body = oauthResponse.body;
-        ctx.status = oauthResponse.status || 500;
-        ctx.set(oauthResponse.headers || {});
-        await next();
-    } catch (e) {
-        ctx.status = e.code;
-        ctx.body = {error: e.name, error_description: e.message}
-    }
+
+    const token = await server.authenticate(oauthRequest, oauthResponse, {
+        scope: scope
+    })
+    ctx.state.token = token;
+    ctx.state.user = token.user;
+    logger.info(token)
+    ctx.body = oauthResponse.body;
+    ctx.status = oauthResponse.status || 500;
+    ctx.set(oauthResponse.headers || {});
+    await next();
+
 }
