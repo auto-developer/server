@@ -11,7 +11,7 @@ import OAuth2Server, {
 } from "oauth2-server";
 import {findClientByClientIdClientSecret} from '../service/Client';
 import {getCodeByAuthorizationCode, saveCode} from '../service/AuthorizationCode';
-import {deleteToken, findRefreshToken, findToken, saveToken} from '../service/Token';
+import {removeToken, findRefreshToken, findToken, saveToken} from '../service/Token';
 import {findAuthenticationByIdentifier} from '../service/Authentication';
 
 const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
@@ -108,7 +108,7 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
      * refresh_token
      */
     revokeToken: async (token: RefreshToken | Token): Promise<boolean> => {
-        const removeResult = await deleteToken(token.accessToken);
+        const removeResult = await removeToken(token.accessToken);
         return removeResult;
     },
 }

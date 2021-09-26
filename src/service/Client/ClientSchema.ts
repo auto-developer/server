@@ -1,6 +1,6 @@
 import {Schema} from "mongoose";
 import {mongoose} from '../../common/db'
-import {ClientType} from "./Client";
+import {Client} from "../../type";
 
 /**
  * client    Object    The return value.
@@ -10,7 +10,7 @@ import {ClientType} from "./Client";
  * [client.accessTokenLifetime]    Number    Client-specific lifetime of generated access tokens in seconds.
  * [client.refreshTokenLifetime]    Number    Client-specific lifetime of generated refresh tokens in seconds.
  */
-const ClientSchema = new Schema<ClientType>({
+const ClientSchema = new Schema<Client>({
     clientSecret: String,
     redirectUris: [String],
     grants: [String],
@@ -18,4 +18,4 @@ const ClientSchema = new Schema<ClientType>({
     refreshTokenLifetime: Number,
 }, {toObject: {virtuals: true}});
 
-export const ClientModel = mongoose.model<ClientType>('Client', ClientSchema);
+export const ClientModel = mongoose.model<Client>('Client', ClientSchema);

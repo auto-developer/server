@@ -2,16 +2,16 @@ import Router from "koa-router";
 import {Context, DefaultState, Next} from "koa";
 import {userSessionHandler} from "./middleware/handler";
 import {pageErrorHandler} from "./middleware/error";
-import {findUserApplicationsById} from "../service/User";
 import {Request, Response} from "oauth2-server";
 import {server} from "../common/oauth"
 import {logger} from "../common/logger";
+import {findUserById} from "../service/User";
 
 export const beforeGetAuthorize = async (ctx: Context, next: Next): Promise<void> => {
     const {client_id} = ctx.request.query
     ctx.assert(client_id, 400, 'client_id is required')
     const {userId} = ctx.state
-    const userWithApplications = await findUserApplicationsById(userId)
+    const userWithApplications = await findUserById(userId)
     ctx.assert(userWithApplications, 401)
     if (!userWithApplications.applications.includes(client_id)) return ctx.redirect(`/application?client_id=${client_id}&return_to=${ctx.request.url}`)
     await next()

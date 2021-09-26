@@ -2,7 +2,7 @@ import Router from "koa-router";
 import {Context, DefaultState, Next} from "koa";
 import {findClientById} from "../service/Client";
 import {userSessionHandler} from "./middleware/handler";
-import {findUserApplicationsById} from "../service/User";
+import {findUserById} from "../service/User";
 
 const application = new Router<DefaultState, Context>()
 
@@ -20,7 +20,7 @@ application
     .post('/application', userSessionHandler, async (ctx: Context, next: Next) => {
         const {client_id, return_to} = ctx.request.body
         const {userId} = ctx.state
-        const userWithApplications = await findUserApplicationsById(userId)
+        const userWithApplications = await findUserById(userId)
         ctx.assert(userWithApplications, 401)
         userWithApplications.applications.push(client_id)
         await userWithApplications.save()
