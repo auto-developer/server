@@ -34,7 +34,6 @@ export const authenticate = async (ctx: Context, next: Next) => {
     })
     ctx.state.token = token;
     ctx.state.user = token.user;
-    logger.info(token)
     ctx.body = oauthResponse.body;
     ctx.status = oauthResponse.status || 500;
     ctx.set(oauthResponse.headers || {});
