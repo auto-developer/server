@@ -13,7 +13,9 @@ export const beforeGetAuthorize = async (ctx: Context, next: Next): Promise<void
     const {userId} = ctx.state
     const userWithApplications = await findUserById(userId)
     ctx.assert(userWithApplications, 401)
-    if (!userWithApplications.applications.includes(client_id)) return ctx.redirect(`/application?client_id=${client_id}&return_to=${ctx.request.url}`)
+    console.log(userWithApplications.applications, client_id, userWithApplications.applications.includes(client_id))
+    if (!userWithApplications.applications.map((applicationId:string) => applicationId.toString()).includes(client_id))
+        return ctx.redirect(`/application?client_id=${client_id}&return_to=${ctx.request.url}`)
     await next()
 }
 

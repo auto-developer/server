@@ -1,8 +1,7 @@
-import {User} from "../../type";
-import {Falsey} from "oauth2-server";
+import {Falsey, FindUserByUsername, User} from "../../type";
 import {UserModel} from "./UserSchema";
 
-export const findUserByUsername = async (username: string): Promise<User | Falsey> => {
+export const findUserByUsername:FindUserByUsername = async (username: string): Promise<User | Falsey> => {
     const user = await UserModel.findOne({
         username
     })

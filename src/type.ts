@@ -55,3 +55,11 @@ export interface Token extends TokenType {
 
 }
 
+/**
+ * service User
+ */
+export type FindUsers = (userFilter: Partial<User>, pagination: PaginationQuery) => Promise<User[]>
+export type FindUserById = (uid: string) => Promise<User | Falsey>
+export type FindUserByUsername = (username: string) => Promise<User | Falsey>
+export type InsertUser = (user: User) => Promise<User>
+export type UpdateUserById = (uid: string, user: User) => Promise<User | Falsey>
