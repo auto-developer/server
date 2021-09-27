@@ -1,6 +1,6 @@
 import {Schema} from 'mongoose'
-import {AuthorizationCode} from "oauth2-server";
 import {mongoose} from "../../common/db";
+import {Code} from "../../type";
 
 /**
  * code	Object	The return value.
@@ -12,7 +12,7 @@ import {mongoose} from "../../common/db";
  * code.client.id    String    A unique string identifying the client.
  * code.user    Object    The user associated with the authorization code.
  */
-const AuthorizationCodeSchema = new Schema<AuthorizationCode>({
+const CodeSchema = new Schema<Code>({
     authorizationCode: String,
     expiresAt: Date,
     redirectUri: String,
@@ -21,4 +21,4 @@ const AuthorizationCodeSchema = new Schema<AuthorizationCode>({
     user: {type: Schema.Types.ObjectId, ref: 'User'},
 }, {toObject: {virtuals: true}});
 
-export const AuthorizationCodeModel = mongoose.model<AuthorizationCode>('Code', AuthorizationCodeSchema)
+export const CodeModel = mongoose.model<Code>('Code', CodeSchema)

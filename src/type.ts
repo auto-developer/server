@@ -45,7 +45,7 @@ export interface Authentication {
     user: User;
 }
 
-export interface AuthorizationCode extends AuthorizationCodeType {
+export interface Code extends AuthorizationCodeType {
 }
 
 export interface RefreshToken extends RefreshTokenType {
@@ -75,9 +75,9 @@ export type SaveClient = (client: Omit<Client, 'id'>) => Promise<Client>
 /**
  * service AuthorizationCode
  */
-export type GetCodeByAuthorizationCode = (authorizationCode: string) => Promise<AuthorizationCode | Falsey>
-export type RemoveCode = (code: AuthorizationCode) => Promise<void>
-export type SaveCode = (code: AuthorizationCode) => Promise<AuthorizationCode>
+export type FindCodeByAuthorizationCode = (authorizationCode: string) => Promise<Code | Falsey>
+export type RemoveCode = (code: Code) => Promise<void>
+export type SaveCode = (code: Code) => Promise<Code>
 
 /**
  * service Authentication

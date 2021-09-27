@@ -10,7 +10,7 @@ import OAuth2Server, {
     User
 } from "oauth2-server";
 import {findClientByClientIdClientSecret} from '../service/Client';
-import {getCodeByAuthorizationCode, saveCode} from '../service/AuthorizationCode';
+import {findCodeByAuthorizationCode, saveCode} from '../service/Code';
 import {removeToken, findRefreshToken, findToken, saveToken} from '../service/Token';
 import {findAuthenticationByIdentifier} from '../service/Authentication';
 
@@ -27,7 +27,7 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
      * @param authorizationCode
      * @returns {Promise<AuthorizationCode>}
      */
-    getAuthorizationCode: getCodeByAuthorizationCode,
+    getAuthorizationCode: findCodeByAuthorizationCode,
 
     /**
      *  authorization_code grant
