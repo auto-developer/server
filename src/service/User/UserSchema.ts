@@ -25,7 +25,7 @@ const UserSchema = new Schema<User>({
         enum: [PLATFORM.username, PLATFORM.wechat, PLATFORM.qq, PLATFORM.weibo]
     },
     gender: {type: String, default: GENDER.male, enum: [GENDER.male, GENDER.female]},
-    face: {type: String},
+    avatar: {type: String},
     signature: {type: String},
     userRole: {type: String, default: USER_ROLE.normal, enum: [USER_ROLE.normal, USER_ROLE.admin]},
     email: {type: String, unique: true},
