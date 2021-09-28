@@ -10,8 +10,8 @@ import OAuth2Server, {
     User
 } from "oauth2-server";
 import {findClientByClientIdClientSecret} from '../service/Client';
-import {findCodeByAuthorizationCode, saveCode} from '../service/Code';
-import {removeToken, findRefreshToken, findToken, saveToken} from '../service/Token';
+import {findCodeByAuthorizationCode, insertCode} from '../service/Code';
+import {removeToken, findRefreshToken, findTokenByAccessToken, insertToken} from '../service/Token';
 import {findAuthenticationByIdentifier} from '../service/Authentication';
 
 const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
@@ -20,7 +20,7 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
      * request authentication
      * @param accessToken
      */
-    getAccessToken: findToken,
+    getAccessToken: findTokenByAccessToken,
 
     /**
      * authorization_code grant
@@ -61,7 +61,7 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
      * @returns {Promise<Token>}
      */
     saveToken: async (token, client, user): Promise<Token | Falsey> => {
-        return await saveToken({...token, client, user});
+        return await insertToken({...token, client, user});
     },
 
     /**
@@ -72,7 +72,7 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
      * @returns authorizationCode {Promise<AuthorizationCode>}
      */
     saveAuthorizationCode: async (code, client, user): Promise<AuthorizationCode> => {
-        const codeModel = await saveCode({...code, user, client});
+        const codeModel = await insertCode({...code, user, client});
         return codeModel
     },
 

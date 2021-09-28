@@ -70,25 +70,25 @@ export type UpdateUserById = (uid: string, user: User) => Promise<User | Falsey>
 export type FindClientByClientIdClientSecret = (clientId: string, clientSecret: string) => Promise<Client | Falsey>
 export type FindClientById = (clientId: string) => Promise<Client | Falsey>
 export type FindClients = (clientFilter: Partial<Client>, pagination: PaginationQuery) => Promise<Client[]>
-export type SaveClient = (client: Omit<Client, 'id'>) => Promise<Client>
+export type InsertClient = (client: Client) => Promise<Client>
 
 /**
  * service AuthorizationCode
  */
 export type FindCodeByAuthorizationCode = (authorizationCode: string) => Promise<Code | Falsey>
+export type InsertCode = (code: Code) => Promise<Code>
 export type RemoveCode = (code: Code) => Promise<void>
-export type SaveCode = (code: Code) => Promise<Code>
 
 /**
  * service Authentication
  */
 export type FindAuthenticationByIdentifier = (username: string, password: string) => Promise<Authentication | Falsey>
-export type SaveAuthentication = (authentication: Authentication) => Promise<Authentication>
+export type InsertAuthentication = (authentication: Authentication) => Promise<Authentication>
 
 /**
  * service Token
  */
 export type FindRefreshToken = (refreshToken: string) => Promise<RefreshToken | Falsey>
-export type FindToken = (accessToken: string) => Promise<Token | Falsey>
+export type FindTokenByAccessToken = (accessToken: string) => Promise<Token | Falsey>
+export type InsertToken = (token: Token) => Promise<Token>
 export type RemoveToken = (token: Token) => Promise<boolean>
-export type SaveToken = (token: Token) => Promise<Token>
