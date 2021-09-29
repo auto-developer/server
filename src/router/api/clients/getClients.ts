@@ -1,7 +1,6 @@
 import {Context, Next} from "koa";
 import {findClients} from "../../../service/Client";
 
-
 export const getClients = async (ctx: Context, next: Next): Promise<void> => {
     const {page, size} = ctx.request.query
     const userFilter = ctx.request.query
