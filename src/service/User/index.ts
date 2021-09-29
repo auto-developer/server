@@ -26,7 +26,7 @@ export const findUserByUsername: FindUserByUsername = async (username: string): 
     return user?.toObject<User>()
 }
 
-export const findUserById: FindUserById = async (uid) => {
+export const findUserById: FindUserById = async (uid): Promise<User | Falsey> => {
     const user = await UserModel.findById(uid)
     return user?.toObject<User>()
 }
