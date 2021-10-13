@@ -3,12 +3,13 @@ import {getSession} from "../../service/Session";
 import {findUserById} from "../../service/User";
 import {Request, Response} from "oauth2-server";
 import {server} from "../../common/oauth";
-import {logger} from "../../common/logger";
 
 export const userSessionHandler = async (ctx: Context, next: Next) => {
     const redirectWithQuery = (page: string) => {
+        const clientId = typeof ctx.query.client_id === 'string' ? ctx.query.client_id : ''
         const query = new URLSearchParams({
-            return_to: ctx.request.url
+            client_id: clientId,
+            return_to: ctx.request.url,
         })
         ctx.cookies.set(`/user_session`, undefined)
         return ctx.redirect(`/${page}?${query.toString()}`)
@@ -38,5 +39,4 @@ export const authenticate = async (ctx: Context, next: Next) => {
     ctx.status = oauthResponse.status || 500;
     ctx.set(oauthResponse.headers || {});
     await next();
-
 }

@@ -17,7 +17,7 @@ session
         await next()
     })
     .post('/session', async (ctx: Context, next: Next) => {
-        const {identifier, certificate, return_to, timestamp, timestamp_secret} = ctx.request.body
+        const {identifier, certificate, return_to} = ctx.request.body
         const auth = await findAuthenticationByIdentifier(identifier, certificate)
         if (!auth) return ctx.redirect('/session')
         const session = await setSession(auth.user.id)
