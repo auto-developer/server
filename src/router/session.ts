@@ -17,9 +17,10 @@ session
         await next()
     })
     .post('/session', async (ctx: Context, next: Next) => {
-        const {identifier, certificate, return_to} = ctx.request.body
+        const {identifier, certificate, return_to, client_id} = ctx.request.body
+        const query = new URLSearchParams({client_id, return_to})
         const auth = await findAuthenticationByIdentifier(identifier, certificate)
-        if (!auth) return ctx.redirect('/session')
+        if (!auth) return ctx.redirect(`/session?${query}`)
         const session = await setSession(auth.user.id)
         ctx.cookies.set('user_session', session)
         await ctx.redirect(return_to)
