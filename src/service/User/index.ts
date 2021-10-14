@@ -9,6 +9,7 @@ import {
     User
 } from "../../type";
 import {UserModel} from "./UserSchema";
+import * as mongoose from "mongoose";
 
 export const findUsers: FindUsers = async (userFilter: Partial<User>, pagination: PaginationQuery): Promise<User[]> => {
     const users = await UserModel.find()
@@ -27,8 +28,9 @@ export const findUserByUsername: FindUserByUsername = async (username: string): 
 }
 
 export const findUserById: FindUserById = async (uid): Promise<User | Falsey> => {
-    const user = await UserModel.findById(uid)
-    return user?.toObject<User>()
+    const user = await UserModel.findById(uid).lean()
+    if (user) user.applications = user?.applications.map((cid: mongoose.ObjectId) => cid.toString())
+    return user
 }
 
 export const insertUser: InsertUser = async (user: User): Promise<User> => {

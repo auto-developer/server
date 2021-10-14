@@ -1,8 +1,8 @@
 import Router from "koa-router";
 import {Context, DefaultState, Next} from "koa";
 import {findClientById} from "../service/Client";
-import {userSessionHandler} from "./middleware/handler";
-import {findUserById, updateUserById} from "../service/User";
+import {userHandler} from "./middleware/handler";
+import {updateUserById} from "../service/User";
 
 const application = new Router<DefaultState, Context>()
 
@@ -17,13 +17,14 @@ application
         await ctx.render('application')
         await next()
     })
-    .post('/application', userSessionHandler, async (ctx: Context, next: Next) => {
+    .post('/application', userHandler, async (ctx: Context, next: Next) => {
         const {client_id, return_to} = ctx.request.body
-        const {userId} = ctx.state
-        const user = await findUserById(userId)
+        const {userId, user} = ctx.state
         ctx.assert(user, 401)
-        user.applications.push(client_id)
-        await updateUserById(user._id, user)
+        const applicationSet = new Set(user.applications)
+        applicationSet.add(client_id)
+        user.applications = Array.from(applicationSet)
+        await updateUserById(userId, user)
         await ctx.redirect(return_to)
         await next()
     })

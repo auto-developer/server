@@ -1,20 +1,18 @@
 import Router from "koa-router";
 import {Context, DefaultState, Next} from "koa";
-import {userSessionHandler} from "./middleware/handler";
+import {userHandler} from "./middleware/handler";
 import {pageErrorHandler} from "./middleware/error";
 import {Request, Response} from "oauth2-server";
 import {server} from "../common/oauth"
 import {logger} from "../common/logger";
-import {findUserById} from "../service/User";
 
 export const beforeGetAuthorize = async (ctx: Context, next: Next): Promise<void> => {
     const {client_id} = ctx.request.query
     ctx.assert(client_id, 400, 'client_id is required')
-    const {userId} = ctx.state
-    const userWithApplications = await findUserById(userId)
-    ctx.assert(userWithApplications, 401)
-    console.log(userWithApplications.applications, client_id, userWithApplications.applications.includes(client_id))
-    if (!userWithApplications.applications.map((applicationId:string) => applicationId.toString()).includes(client_id))
+    const {user} = ctx.state
+    ctx.assert(user, 401)
+    console.log(user.applications, client_id, user.applications.includes(client_id))
+    if (!user.applications.includes(client_id))
         return ctx.redirect(`/application?client_id=${client_id}&return_to=${ctx.request.url}`)
     await next()
 }
@@ -58,7 +56,7 @@ export const postToken = async (ctx: Context, next: Next) => {
 
 const oauth = new Router<DefaultState, Context>()
     .use(pageErrorHandler)
-    .get('/authorize', userSessionHandler, beforeGetAuthorize, getAuthorize)
+    .get('/authorize', userHandler, beforeGetAuthorize, getAuthorize)
     .post('/token', postToken)
 
 export default oauth

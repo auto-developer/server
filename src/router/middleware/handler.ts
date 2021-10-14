@@ -4,7 +4,7 @@ import {findUserById} from "../../service/User";
 import {Request, Response} from "oauth2-server";
 import {server} from "../../common/oauth";
 
-export const userSessionHandler = async (ctx: Context, next: Next) => {
+export const userHandler = async (ctx: Context, next: Next) => {
     const redirectWithQuery = (page: string) => {
         const clientId = typeof ctx.query.client_id === 'string' ? ctx.query.client_id : ''
         const query = new URLSearchParams({
@@ -19,9 +19,12 @@ export const userSessionHandler = async (ctx: Context, next: Next) => {
     const userId = await getSession(sessionId)
     if (!userId) return redirectWithQuery('session')
     const user = await findUserById(userId)
+    console.log('----user----')
+    console.log(typeof user?.applications[0])
     if (!user) return redirectWithQuery('session')
 
     ctx.state.userId = userId
+    ctx.state.user = user
     await next()
 }
 
