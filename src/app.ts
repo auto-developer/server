@@ -10,7 +10,7 @@ import router from './router';
 const ROOT = process.cwd();
 
 const staticRoot = path.join(ROOT, 'static')
-const viewRoot = path.join(ROOT, 'view')
+const viewRoot = path.join(ROOT, 'static')
 const app = new Koa();
 app.keys = [APP_KEY];
 app.proxy = true;
