@@ -6,6 +6,7 @@ import koaViews from 'koa-views';
 import koaStatic from 'koa-static';
 import path from 'path'
 import router from './router';
+import {pageErrorHandler} from "./router/middleware/error";
 
 const ROOT = process.cwd();
 
@@ -21,5 +22,7 @@ app.use(koaViews(viewRoot, {map: {html: 'handlebars'}}))
 app.use(koaBody({multipart: true}));
 app.use(router.routes());
 app.use(router.allowedMethods());
+app.use(pageErrorHandler)
+
 
 export default app;

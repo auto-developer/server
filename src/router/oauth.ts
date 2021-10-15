@@ -1,12 +1,12 @@
 import Router from "koa-router";
 import {Context, DefaultState, Next} from "koa";
-import {userHandler} from "./middleware/handler";
-import {pageErrorHandler} from "./middleware/error";
+import {authenticate, userHandler} from "./middleware/handler";
+import {sessionErrorHandler} from "./middleware/error";
 import {Request, Response} from "oauth2-server";
 import {server} from "../common/oauth"
 import {logger} from "../common/logger";
 
-export const beforeGetAuthorize = async (ctx: Context, next: Next): Promise<void> => {
+export const applicationHandler = async (ctx: Context, next: Next): Promise<void> => {
     const {client_id} = ctx.request.query
     ctx.assert(client_id, 400, 'client_id is required')
     const {user} = ctx.state
@@ -55,8 +55,8 @@ export const postToken = async (ctx: Context, next: Next) => {
 
 
 const oauth = new Router<DefaultState, Context>()
-    .use(pageErrorHandler)
-    .get('/authorize', userHandler, beforeGetAuthorize, getAuthorize)
+    .get('/authorize', sessionErrorHandler, userHandler, applicationHandler, getAuthorize)
     .post('/token', postToken)
+    .all('/authenticate', authenticate)
 
 export default oauth
