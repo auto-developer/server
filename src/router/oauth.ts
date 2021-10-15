@@ -18,7 +18,6 @@ const applicationHandler = async (ctx: Context, next: Next): Promise<void> => {
     await next()
 }
 
-
 const getAuthorize = async (ctx: Context, next: Next) => {
     const oauthRequest = new Request(ctx.request);
     const oauthResponse = new Response(ctx.response);
@@ -53,7 +52,6 @@ const postToken = async (ctx: Context, next: Next) => {
     }
     await next();
 }
-
 
 const oauth = new Router<DefaultState, Context>()
     .get('/authorize', sessionErrorHandler, userHandler, applicationHandler, getAuthorize)
