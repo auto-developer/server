@@ -23,7 +23,7 @@ const postSession = async (ctx: Context, next: Next) => {
     }
     const session = await setSession(auth.user.id)
     ctx.cookies.set('user_session', session)
-    await ctx.redirect(return_to)
+    await ctx.redirect(return_to || '/')
     await next()
 }
 

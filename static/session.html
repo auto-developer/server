@@ -130,6 +130,7 @@
     </div>
     <h1>Sign in to Github</h1>
     <div class="auth-form-body">
+      {{#if client}}
       <div class="auth-application">
         <div class="logo">
           <img src="{{client.logo}}" alt="Application logo">
@@ -141,6 +142,7 @@
         </p>
         <hr>
       </div>
+      {{/if}}
       <form action="/session" method="post">
         <label for="identifier">Username or email address</label>
         <input id="identifier" name="identifier" type="text">
