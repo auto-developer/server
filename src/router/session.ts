@@ -29,9 +29,9 @@ const postSession = async (ctx: Context, next: Next) => {
     await next()
 }
 
-const session = new Router<DefaultState, Context>()
+const session = new Router<DefaultState, Context>({prefix: 'session'})
 session
-    .get('/session', getSession)
-    .post('/session', postSession)
+    .get('/', getSession)
+    .post('/', postSession)
 
 export default session
