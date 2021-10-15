@@ -27,7 +27,7 @@ redirect to http://localhost:8080/oauth/authorize?response_type=code&client_id=6
 ```
 
 
-![](./static/流程图.jpg)
+![](static/assets/流程图.jpg)
 
 
 

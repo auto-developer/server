@@ -27,11 +27,11 @@ const postApplication = async (ctx: Context, next: Next) => {
     await next()
 }
 
-const application = new Router<DefaultState, Context>()
+const application = new Router<DefaultState, Context>({prefix: 'application'})
 
 application
     .use(userHandler)
-    .get('/application', getApplication)
-    .post('/application', postApplication)
+    .get('/', getApplication)
+    .post('/', postApplication)
 
 export default application

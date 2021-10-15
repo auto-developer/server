@@ -10,7 +10,9 @@ const getSession = async (ctx: Context, next: Next) => {
     if (ctx.state.client_id) ctx.state.client = await findClientById(ctx.state.client_id)
     ctx.state = {client_id, client, return_to}
     await ctx.render('session')
+    console.log("====");
     await next()
+    console.log("----");
 }
 
 const postSession = async (ctx: Context, next: Next) => {
