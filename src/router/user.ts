@@ -17,7 +17,7 @@ const postUser = async (ctx: Context, next: Next) => {
     await next()
 }
 
-const user = new Router<DefaultState, Context>({prefix: 'user'})
+const user = new Router<DefaultState, Context>({prefix: '/user'})
 user
     .get('/', getUser)
     .post('/', postUser)

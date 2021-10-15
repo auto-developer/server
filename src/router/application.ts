@@ -27,7 +27,7 @@ const postApplication = async (ctx: Context, next: Next) => {
     await next()
 }
 
-const application = new Router<DefaultState, Context>({prefix: 'application'})
+const application = new Router<DefaultState, Context>({prefix: '/application'})
 
 application
     .use(userHandler)

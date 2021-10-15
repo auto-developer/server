@@ -29,7 +29,7 @@ const postSession = async (ctx: Context, next: Next) => {
     await next()
 }
 
-const session = new Router<DefaultState, Context>({prefix: 'session'})
+const session = new Router<DefaultState, Context>({prefix: '/session'})
 session
     .get('/', getSession)
     .post('/', postSession)
