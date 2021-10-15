@@ -6,19 +6,20 @@ import {Request, Response} from "oauth2-server";
 import {server} from "../common/oauth"
 import {logger} from "../common/logger";
 
-export const applicationHandler = async (ctx: Context, next: Next): Promise<void> => {
+const applicationHandler = async (ctx: Context, next: Next): Promise<void> => {
     const {client_id} = ctx.request.query
     ctx.assert(client_id, 400, 'client_id is required')
     const {user} = ctx.state
     ctx.assert(user, 401)
-    console.log(user.applications, client_id, user.applications.includes(client_id))
-    if (!user.applications.includes(client_id))
-        return ctx.redirect(`/application?client_id=${client_id}&return_to=${ctx.request.url}`)
+    if (!user.applications.includes(client_id)) {
+        ctx.state = {client_id, return_to: ctx.request.url}
+        return ctx.render(`application`)
+    }
     await next()
 }
 
 
-export const getAuthorize = async (ctx: Context, next: Next) => {
+const getAuthorize = async (ctx: Context, next: Next) => {
     const oauthRequest = new Request(ctx.request);
     const oauthResponse = new Response(ctx.response);
     const authenticateHandler = {
@@ -36,7 +37,7 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
     await next();
 }
 
-export const postToken = async (ctx: Context, next: Next) => {
+const postToken = async (ctx: Context, next: Next) => {
     const oauthRequest = new Request(ctx.request);
     const oauthResponse = new Response(ctx.response);
 

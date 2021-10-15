@@ -28,7 +28,6 @@ export const sessionErrorHandler = async (ctx: Context, next: Next) => {
     } catch (e) {
         switch (e.status) {
             case 401:
-                ctx.status = e.status
                 ctx.cookies.set(`/user_session`, undefined)
                 await ctx.render('session')
                 break
