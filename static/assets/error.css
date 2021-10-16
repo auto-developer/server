@@ -2,7 +2,7 @@ body {
     background-color: #2f3242;
 }
 
-svg {
+img {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -51,52 +51,10 @@ svg {
     color: #fff;
 }
 
-#Polygon-1,
-#Polygon-2,
-#Polygon-3,
-#Polygon-4,
-#Polygon-4,
-#Polygon-5 {
-    -webkit-animation: float 1s infinite ease-in-out alternate;
-    animation: float 1s infinite ease-in-out alternate;
-}
 
-#Polygon-2 {
-    -webkit-animation-delay: 0.2s;
-    animation-delay: 0.2s;
-}
-
-#Polygon-3 {
-    -webkit-animation-delay: 0.4s;
-    animation-delay: 0.4s;
-}
-
-#Polygon-4 {
-    -webkit-animation-delay: 0.6s;
-    animation-delay: 0.6s;
-}
-
-#Polygon-5 {
-    -webkit-animation-delay: 0.8s;
-    animation-delay: 0.8s;
-}
-
-@-webkit-keyframes float {
-    100% {
-        -webkit-transform: translateY(20px);
-        transform: translateY(20px);
-    }
-}
-
-@keyframes float {
-    100% {
-        -webkit-transform: translateY(20px);
-        transform: translateY(20px);
-    }
-}
 
 @media (max-width: 450px) {
-    svg {
+    img {
         position: absolute;
         top: 50%;
         left: 50%;
