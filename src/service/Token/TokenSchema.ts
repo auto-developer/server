@@ -18,7 +18,7 @@ const TokenSchema = new Schema<Token>({
     accessTokenExpiresAt: Date,
     refreshToken: String,
     refreshTokenExpiresAt: Date,
-    scope: String,
+    scope: [String],
     client: {type: Schema.Types.ObjectId, ref: 'Client'},
     user: {type: Schema.Types.ObjectId, ref: 'User'},
 }, {toObject: {virtuals: true}});

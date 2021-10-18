@@ -21,13 +21,18 @@ export const userHandler = async (ctx: Context, next: Next) => {
     await next()
 }
 
+export const scopeHandler = async (ctx: Context, next:Next) => {
+    console.log(ctx.request.method)
+    const scope = ['username']
+    ctx.state.scope = scope
+    await next()
+}
+
 export const authenticate = async (ctx: Context, next: Next) => {
     const oauthRequest = new Request(ctx.request);
     const oauthResponse = new Response(ctx.response);
-    const {scope} = ctx.request.body;
-
     const token = await server.authenticate(oauthRequest, oauthResponse, {
-        scope: scope
+        scope: ctx.state.scope
     })
     ctx.state.token = token;
     ctx.state.user = token.user;

@@ -11,7 +11,7 @@ import OAuth2Server, {
 } from "oauth2-server";
 import {findClientByClientIdClientSecret} from '../service/Client';
 import {findCodeByAuthorizationCode, insertCode} from '../service/Code';
-import {removeToken, findRefreshToken, findTokenByAccessToken, insertToken} from '../service/Token';
+import {findRefreshToken, findTokenByAccessToken, insertToken, removeToken} from '../service/Token';
 import {findAuthenticationByIdentifier} from '../service/Authentication';
 
 const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
@@ -86,6 +86,7 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
     },
 
     validateScope: async (user: User, client: Client, scope: string | string[]): Promise<string | string[] | Falsey> => {
+        console.log('validateScope', user, client, scope)
         return scope
     },
 
@@ -94,8 +95,11 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
      * @param token token
      * @param scope scope
      */
-    verifyScope: async (token: Token, scope: string | string[]) => {
-        return token.scope === scope;
+    verifyScope: async (token: Token, scope: string | string[]): Promise<boolean> => {
+        if (!token.scope || !Array.isArray(scope) || !Array.isArray(token.scope)) {
+            return false
+        }
+        return token.scope.every(s => scope.indexOf(s) >= 0);
     },
 
     /**

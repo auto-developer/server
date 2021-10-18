@@ -16,7 +16,7 @@ const CodeSchema = new Schema<Code>({
     authorizationCode: String,
     expiresAt: Date,
     redirectUri: String,
-    scope: String,
+    scope: [String],
     client: {type: Schema.Types.ObjectId, ref: 'Client'},
     user: {type: Schema.Types.ObjectId, ref: 'User'},
 }, {toObject: {virtuals: true}});
