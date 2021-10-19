@@ -24,5 +24,4 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 app.use(pageErrorHandler)
 
-
 export default app;

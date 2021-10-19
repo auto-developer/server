@@ -22,7 +22,7 @@ export const userHandler = async (ctx: Context, next: Next) => {
 }
 
 export const scopeHandler = async (ctx: Context, next:Next) => {
-    console.log(ctx.request.method)
+    console.log(ctx.request.method, ctx.ip, ctx.ips)
     const scope = ['username']
     ctx.state.scope = scope
     await next()
