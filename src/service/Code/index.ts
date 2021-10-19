@@ -12,8 +12,9 @@ export const findCodeByAuthorizationCode: FindCodeByAuthorizationCode = async (a
   return codeInstance;
 }
 
-export const removeCode: RemoveCode = async (code: Code): Promise<void> => {
-  await CodeModel.findOneAndDelete(code)
+export const removeCode: RemoveCode = async (code: Code): Promise<boolean> => {
+  const codeInstance = await CodeModel.findOneAndDelete(code)
+  return !!codeInstance
 }
 
 export const insertCode: InsertCode = async (code: Code): Promise<Code> => {

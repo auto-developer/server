@@ -10,7 +10,7 @@ import OAuth2Server, {
     User
 } from "oauth2-server";
 import {findClientByClientIdClientSecret} from '../service/Client';
-import {findCodeByAuthorizationCode, insertCode} from '../service/Code';
+import {findCodeByAuthorizationCode, insertCode, removeCode} from '../service/Code';
 import {findRefreshToken, findTokenByAccessToken, insertToken, removeToken} from '../service/Token';
 import {findAuthenticationByIdentifier} from '../service/Authentication';
 
@@ -82,7 +82,7 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
      * @returns boolean {Promise<boolean>}
      */
     revokeAuthorizationCode: async (code: AuthorizationCode): Promise<boolean> => {
-        return true
+        return removeCode(code)
     },
 
     validateScope: async (user: User, client: Client, scope: string | string[]): Promise<string | string[] | Falsey> => {

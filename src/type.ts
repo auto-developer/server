@@ -77,7 +77,7 @@ export type InsertClient = (client: Client) => Promise<Client>
  */
 export type FindCodeByAuthorizationCode = (authorizationCode: string) => Promise<Code | Falsey>
 export type InsertCode = (code: Code) => Promise<Code>
-export type RemoveCode = (code: Code) => Promise<void>
+export type RemoveCode = (code: Code) => Promise<boolean>
 
 /**
  * service Authentication
