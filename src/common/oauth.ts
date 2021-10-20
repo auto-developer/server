@@ -87,6 +87,12 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
 
     validateScope: async (user: User, client: Client, scope: string | string[]): Promise<string | string[] | Falsey> => {
         console.log('validateScope', user, client, scope)
+        const who = ['admin']
+        const when = []
+        const what = ['admin']
+        const how = ['read', 'write']
+        const where = []
+        let scopeArray = []
         return scope
     },
 

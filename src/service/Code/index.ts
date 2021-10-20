@@ -13,7 +13,7 @@ export const findCodeByAuthorizationCode: FindCodeByAuthorizationCode = async (a
 }
 
 export const removeCode: RemoveCode = async (code: Code): Promise<boolean> => {
-  const codeInstance = await CodeModel.findOneAndDelete(code)
+  const codeInstance = await CodeModel.findByIdAndDelete(code.id)
   return !!codeInstance
 }
 

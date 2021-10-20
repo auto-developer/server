@@ -20,7 +20,7 @@ export const findTokenByAccessToken: FindTokenByAccessToken = async (accessToken
     return tokenInstance;
 }
 export const removeToken: RemoveToken = async (token: Token): Promise<boolean> => {
-    const tokenInstance = await TokenModel.findOneAndDelete(token);
+    const tokenInstance = await TokenModel.findByIdAndDelete(token.id);
     return !!tokenInstance
 }
 
