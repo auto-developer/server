@@ -9,6 +9,7 @@ export const postSession = async (ctx: Context, next: Next) => {
     const auth = await findAuthenticationByIdentifier(identifier, certificate)
     if (!auth) {
         if (ctx.state.client_id) ctx.state.client = await findClientById(ctx.state.client_id)
+        ctx.state.error = {message: 'Incorrect username or password.'}
         return ctx.render(`session`)
     }
     const session = await setSession(auth.user.id)

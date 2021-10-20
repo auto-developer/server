@@ -12,12 +12,32 @@
       main {
           width: 340px;
           margin: 0 auto;
-          padding: 0 16px;
+          padding: 16px;
           box-sizing: border-box;
       }
 
-      .auth-form {
+      .error-message {
+          padding: 15px 20px;
+          margin: 0 auto;
+          margin-bottom: 10px;
+          font-size: 13px;
+          border-style: solid;
+          border-width: 1px;
+          border-radius: 6px;
+          color: #24292f;
+          background-image: linear-gradient(#ffebe9, #ffebe9);
+          border-color: #e87d73;
+      }
+      .error-message button {
+          cursor: pointer;
+          background: none;
+          border: 0;
+          float: right;
           padding: 16px;
+          margin: -16px;
+      }
+
+      .auth-form {
           box-sizing: border-box;
       }
 
@@ -143,6 +163,16 @@
         <hr>
       </div>
       {{/if}}
+
+      {{#if error}}
+      <div class="error-message">
+        {{error.message}}
+        <button class="flash-close js-flash-close" type="button" aria-label="Dismiss this message">
+          <img src="/assets/close.svg" alt="close button">
+        </button>
+      </div>
+      {{/if}}
+
       <form action="/session" method="post">
         <label for="identifier">Username or email address</label>
         <input id="identifier" name="identifier" type="text">
