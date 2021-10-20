@@ -92,7 +92,7 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
         const what = ['admin']
         const how = ['read', 'write']
         const where = []
-        let scopeArray = []
+
         return scope
     },
 

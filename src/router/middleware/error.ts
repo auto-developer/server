@@ -1,4 +1,5 @@
 import {Context, Next} from "koa";
+import {findClientById} from "../../service/Client";
 
 export const pageErrorHandler = async (ctx: Context, next: Next) => {
     try {
@@ -28,6 +29,9 @@ export const sessionErrorHandler = async (ctx: Context, next: Next) => {
     } catch (e) {
         switch (e.status) {
             case 401:
+                ctx.state.client_id = Array.isArray(ctx.query.client_id) ? ctx.query.client_id[0] : ctx.query.client_id || ''
+                ctx.state.return_to = ctx.request.url
+                if (ctx.state.client_id) ctx.state.client = await findClientById(ctx.state.client_id)
                 ctx.cookies.set(`/user_session`, undefined)
                 await ctx.render('session')
                 break
