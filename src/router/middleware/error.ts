@@ -18,6 +18,7 @@ export const pageErrorHandler = async (ctx: Context, next: Next) => {
                 await ctx.render('503')
                 break
             default:
+                console.log('==========')
                 throw e
         }
     }
