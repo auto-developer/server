@@ -17,8 +17,10 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
         ctx.set(oauthResponse.headers || {})
     } catch (e) {
         logger.error(e)
-        ctx.body = {error: e.name, error_description: e.message};
+        const {redirect_uri} = ctx.request.query
+        ctx.assert(!Array.isArray(redirect_uri), 404)
         ctx.status = e.code;
+        await ctx.render('404')
     }
     await next();
 }
