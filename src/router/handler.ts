@@ -4,7 +4,7 @@ import {findUserById} from "../service/User";
 import {Request, Response} from "oauth2-server";
 import {server} from "../common/oauth";
 import {findClientById} from "../service/Client";
-
+import {logger} from "../common/logger";
 
 export const pageErrorHandler = async (ctx: Context, next: Next) => {
     try {
@@ -23,7 +23,7 @@ export const pageErrorHandler = async (ctx: Context, next: Next) => {
                 await ctx.render('503')
                 break
             default:
-                console.log('==========')
+                logger.error(e.message)
                 throw e
         }
     }
