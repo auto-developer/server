@@ -71,12 +71,16 @@ export const userHandler = async (ctx: Context, next: Next) => {
  * @param next
  */
 export const scopeHandler = async (ctx: Context, next: Next) => {
-    const scope: string[] = []
-    scope.push(ctx.request.method === 'GET' ? 'read' : 'write')
-    ctx.state.scope = scope
+    const path = ctx.path.slice(1).split('/')[0]
+    ctx.state.scope = [`${path.toUpperCase()}:${ctx.request.method.toUpperCase()}`]
     await next()
 }
 
+/**
+ * check token is valid or not
+ * @param ctx
+ * @param next
+ */
 export const authenticate = async (ctx: Context, next: Next) => {
     const oauthRequest = new Request(ctx.request);
     const oauthResponse = new Response(ctx.response);
