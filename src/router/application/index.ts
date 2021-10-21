@@ -1,6 +1,6 @@
 import Router from "koa-router";
 import {Context, DefaultState} from "koa";
-import {userHandler} from "../middleware/handler";
+import {userHandler} from "../handler";
 import {postApplication} from "./postApplication";
 import {getApplication} from "./getApplication";
 

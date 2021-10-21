@@ -6,7 +6,7 @@ import koaViews from 'koa-views';
 import koaStatic from 'koa-static';
 import path from 'path'
 import router from './router';
-import {pageErrorHandler} from "./router/middleware/error";
+import {pageErrorHandler} from "./router/handler";
 
 const ROOT = process.cwd();
 

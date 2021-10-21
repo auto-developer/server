@@ -1,7 +1,6 @@
 import Router from "koa-router";
 import {Context, DefaultState} from "koa";
-import {authenticate, scopeHandler, userHandler} from "../middleware/handler";
-import {sessionErrorHandler} from "../middleware/error";
+import {authenticate, scopeHandler, sessionErrorHandler, userHandler} from "../handler";
 import {applicationHandler} from "./handler";
 import {getAuthorize} from "./getAuthorize";
 import {postToken} from "./postToken";

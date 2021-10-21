@@ -1,6 +1,6 @@
 import Router from 'koa-router';
 import {Context, DefaultState} from "koa";
-import {authenticate, scopeHandler} from "../middleware/handler";
+import {authenticate, scopeHandler} from "../handler";
 import {users} from "./users";
 import {clients} from "./clients";
 import {mine} from "./mine";

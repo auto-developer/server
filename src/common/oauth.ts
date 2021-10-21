@@ -86,8 +86,8 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
     },
 
     validateScope: async (user: User, client: Client, scope: string | string[]): Promise<string | string[] | Falsey> => {
-        if(!Array.isArray(scope)) return false
-        return scope.filter(s => ['read', 'write'].includes(s))
+        const VALID_SCOPE = ['read', 'write']
+        return VALID_SCOPE.filter(s => scope.includes(s))
     },
 
     /**
@@ -99,7 +99,7 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
         if (!token.scope || !Array.isArray(scope) || !Array.isArray(token.scope)) {
             return false
         }
-        return token.scope.every(s => scope.indexOf(s) >= 0);
+        return scope.every(s => token.scope?.includes(s));
     },
 
     /**
