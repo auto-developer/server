@@ -11,7 +11,7 @@ import {ClientModel} from './ClientSchema';
 
 export const findClientByClientIdClientSecret: FindClientByClientIdClientSecret = async (clientId: string, clientSecret: string): Promise<Client | Falsey> => {
     const client = await ClientModel.findById(clientId)
-    return client
+    return clientSecret ? clientSecret === client?.clientSecret && client : client
 }
 
 export const findClientById: FindClientById = async (clientId: string): Promise<Client | Falsey> => {

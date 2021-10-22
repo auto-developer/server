@@ -11,7 +11,7 @@ export type PaginationQuery = {
     size: number;
 }
 
-export type Falsey = undefined | null
+export type Falsey = undefined | null | '' | false
 
 export enum PLATFORM {
     'username' = 'username',
