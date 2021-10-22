@@ -1,7 +1,7 @@
 import OAuth2Server, {
     AuthorizationCode,
     AuthorizationCodeModel,
-    Client,
+    Client, ClientCredentialsModel,
     Falsey,
     PasswordModel,
     RefreshToken,
@@ -14,7 +14,7 @@ import {findCodeByAuthorizationCode, insertCode, removeCode} from '../service/Co
 import {findRefreshToken, findTokenByAccessToken, insertToken, removeToken} from '../service/Token';
 import {findAuthenticationByIdentifier} from '../service/Authentication';
 
-const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
+const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel | ClientCredentialsModel = {
 
     /**
      * request authentication
@@ -115,6 +115,9 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel = {
         const removeResult = await removeToken(token.accessToken);
         return removeResult;
     },
+    getUserFromClient: async(client: Client): Promise<User | Falsey> => {
+        return client.owner
+    }
 }
 
 export const server = new OAuth2Server({model})

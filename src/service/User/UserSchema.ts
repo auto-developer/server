@@ -16,8 +16,8 @@ import {GENDER, PLATFORM, USER_ROLE, User} from "../../type";
  * @param definition.mobileBindTime 手机号码绑定时间
  */
 const UserSchema = new Schema<User>({
-    username: {type: String, required: true, unique: true},
-    nickname: {type: String, required: true, default: '二狗子'},
+    username: {type: String, required: 'username is required', unique: true},
+    nickname: {type: String, required: true, default: '匿名用户'},
     registerSource: {
         type: String,
         required: true,

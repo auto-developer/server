@@ -11,11 +11,12 @@ import {Client} from "../../type";
  * [client.refreshTokenLifetime]    Number    Client-specific lifetime of generated refresh tokens in seconds.
  */
 const ClientSchema = new Schema<Client>({
-    clientSecret: String,
+    clientSecret: {type: String, required: 'client secret is required'},
     redirectUris: [String],
     grants: [String],
     accessTokenLifetime: Number,
     refreshTokenLifetime: Number,
+    owner: {type: Schema.Types.ObjectId, ref: 'User', required: 'owner is required'},
 }, {toObject: {virtuals: true}});
 
 export const ClientModel = mongoose.model<Client>('Client', ClientSchema);
