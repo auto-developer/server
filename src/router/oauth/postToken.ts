@@ -4,7 +4,6 @@ import {server} from "../../common/oauth";
 import {logger} from "../../common/logger";
 
 export const postToken = async (ctx: Context, next: Next) => {
-    console.log("::::");
     const oauthRequest = new Request(ctx.request);
     const oauthResponse = new Response(ctx.response);
 
