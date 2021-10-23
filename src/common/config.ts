@@ -2,8 +2,9 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-export const ADMIN_CLIENT_ID = process.env.ADMIN_CLIENT_ID || new Error('ADMIN_CLIENT_ID is required')
-export const ADMIN_CLIENT_SECRET = process.env.ADMIN_CLIENT_SECRET || new Error('ADMIN_CLIENT_SECRET is required')
+export const ADMIN_USER_ID = process.env.ADMIN_USER_ID || ''
+export const ADMIN_CLIENT_ID = process.env.ADMIN_CLIENT_ID || ''
+export const ADMIN_CLIENT_SECRET = process.env.ADMIN_CLIENT_SECRET || ''
 
 export const MYSQL_USERNAME = process.env.MYSQL_USERNAME || 'root';
 export const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD || '123456';

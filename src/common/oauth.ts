@@ -90,8 +90,8 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel | Client
     validateScope: async (user: User, client: Client, scope: string | string[]): Promise<string | string[] | Falsey> => {
         const validScope = policy
             .filter(s => scope.includes(s.name))
-            .filter(s => s.clientRule.test(client.id))
-            .filter(s => s.userRule.test(user.id))
+            .filter(s => new RegExp(`^${s.clientRule}`).test(client.id))
+            .filter(s => new RegExp(`^${s.userRule}`).test(user.id))
             .map(s => s.name)
         return validScope.length > 0 && validScope
     },

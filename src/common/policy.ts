@@ -1,8 +1,8 @@
 import {POLICY} from "../type";
-import {ADMIN_CLIENT_ID} from "./config";
+import {ADMIN_CLIENT_ID, ADMIN_USER_ID} from "./config";
 
 export const policy:POLICY = [{
     name: 'admin',
-    clientRule: new RegExp(`^${ADMIN_CLIENT_ID}$`),
-    userRule: /^\w+$/
+    clientRule: ADMIN_CLIENT_ID,
+    userRule: ADMIN_USER_ID
 }]

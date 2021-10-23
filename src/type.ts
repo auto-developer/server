@@ -28,8 +28,8 @@ export enum GENDER {'male' = 'male', 'female' = 'female'}
 
 export type POLICY_RULE = {
     name: string,
-    clientRule: RegExp,
-    userRule: RegExp
+    clientRule: string,
+    userRule: string
 }
 
 export type POLICY = POLICY_RULE[]
