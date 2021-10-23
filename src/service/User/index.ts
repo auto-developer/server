@@ -28,8 +28,11 @@ export const findUserByUsername: FindUserByUsername = async (username: string): 
 }
 
 export const findUserById: FindUserById = async (uid): Promise<User | Falsey> => {
-    const user = await UserModel.findById(uid).lean()
-    if (user) user.applications = user?.applications.map((cid: mongoose.ObjectId) => cid.toString())
+    const userInstance = await UserModel.findById(uid)
+    const user = userInstance?.toObject<User>()
+    if (user) {
+        user.applications = user.applications.map((cid: mongoose.ObjectId) => cid.toString())
+    }
     return user
 }
 

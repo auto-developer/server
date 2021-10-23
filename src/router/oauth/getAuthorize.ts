@@ -7,7 +7,7 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
     const oauthRequest = new Request(ctx.request);
     const oauthResponse = new Response(ctx.response);
     const authenticateHandler = {
-        handle: async (request: Request, response: Response) => ctx.state.userId
+        handle: async (request: Request, response: Response) => ctx.state.user
     }
     const options = {authenticateHandler: authenticateHandler}
     try {

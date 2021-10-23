@@ -1,4 +1,4 @@
-import {APP_KEY} from './config';
+import {APP_KEY} from './common/config';
 import Koa from 'koa';
 import logger from 'koa-logger';
 import koaBody from 'koa-body';

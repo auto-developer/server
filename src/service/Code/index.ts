@@ -8,7 +8,9 @@ import { CodeModel } from './CodeSchema';
 
 
 export const findCodeByAuthorizationCode: FindCodeByAuthorizationCode = async (authorizationCode: string): Promise<Code | Falsey> => {
-  const codeInstance = await CodeModel.findOne({authorizationCode}).populate('client')
+  const codeInstance = await CodeModel.findOne({authorizationCode})
+      .populate('client')
+      .populate('user')
   return codeInstance;
 }
 

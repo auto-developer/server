@@ -35,5 +35,4 @@ const UserSchema = new Schema<User>({
     applications: {type: [Schema.Types.ObjectId], ref: 'Client'}
 }, {toObject: {virtuals: true}})
 
-
 export const UserModel = mongoose.model<User>('User', UserSchema)

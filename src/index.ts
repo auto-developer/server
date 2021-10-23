@@ -1,5 +1,5 @@
 import app from './app';
-import {MONGO_URI, SERVICE_PORT} from "./config";
+import {MONGO_URI, SERVICE_PORT} from "./common/config";
 import {mongoose} from "./common/db";
 import {logger} from "./common/logger";
 

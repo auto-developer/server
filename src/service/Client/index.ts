@@ -1,21 +1,21 @@
 import {
+    Client,
     Falsey,
     FindClientByClientIdClientSecret,
     FindClientById,
     FindClients,
-    Client,
-    PaginationQuery,
     InsertClient,
+    PaginationQuery,
 } from '../../type';
 import {ClientModel} from './ClientSchema';
 
 export const findClientByClientIdClientSecret: FindClientByClientIdClientSecret = async (clientId: string, clientSecret: string): Promise<Client | Falsey> => {
-    const client = await ClientModel.findById(clientId)
+    const client = await ClientModel.findById(clientId).populate('owner')
     return clientSecret ? clientSecret === client?.clientSecret && client : client
 }
 
 export const findClientById: FindClientById = async (clientId: string): Promise<Client | Falsey> => {
-    const client = await ClientModel.findById(clientId)
+    const client = await ClientModel.findById(clientId).populate('owner')
     return client?.toObject<Client>()
 }
 

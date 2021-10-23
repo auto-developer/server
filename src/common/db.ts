@@ -10,7 +10,7 @@ import {
     MYSQL_USERNAME,
     REDIS_HOST,
     REDIS_PORT
-} from '../config';
+} from './config';
 import {logger} from "./logger";
 
 logger.info(`MYSQL_PORT:${MYSQL_PORT}`)

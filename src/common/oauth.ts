@@ -1,7 +1,8 @@
 import OAuth2Server, {
     AuthorizationCode,
     AuthorizationCodeModel,
-    Client, ClientCredentialsModel,
+    Client,
+    ClientCredentialsModel,
     Falsey,
     PasswordModel,
     RefreshToken,
@@ -86,8 +87,16 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel | Client
     },
 
     validateScope: async (user: User, client: Client, scope: string | string[]): Promise<string | string[] | Falsey> => {
-        const VALID_SCOPE = ['API']
-        return VALID_SCOPE.filter(s => scope.includes(s))
+        const POLICY = [{
+            name: 'API',
+            clientRule: /^614859135dbd09ce606f8e80$/g,
+            userRule: /^614857c55dbd09ce606f8e6f$/g
+        }]
+        const scp = POLICY.filter(s => scope.includes(s.name))
+            .filter(s => s.clientRule.test(client.id))
+            .filter(s => s.userRule.test(user.id))
+            .map(s => s.name)
+        return scp.length > 0 ? scp : false
     },
 
     /**
