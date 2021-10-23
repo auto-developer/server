@@ -26,6 +26,14 @@ export enum USER_ROLE { 'normal' = 'normal', 'admin' = 'admin'}
 
 export enum GENDER {'male' = 'male', 'female' = 'female'}
 
+export type POLICY_RULE = {
+    name: string,
+    clientRule: RegExp,
+    userRule: RegExp
+}
+
+export type POLICY = POLICY_RULE[]
+
 export interface Client extends ClientType {
     logo: string;
     description: string;
