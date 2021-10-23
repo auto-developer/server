@@ -5,7 +5,7 @@ import {users} from "./users";
 import {clients} from "./clients";
 import {mine} from "./mine";
 
-const router = new Router<DefaultState, Context>({prefix: '/api'});
+const router = new Router<DefaultState, Context>({prefix: '/admin'});
 router.use(scopeHandler)
 router.use(authenticate)
 router.use(users.routes());

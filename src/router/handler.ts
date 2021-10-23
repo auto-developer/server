@@ -72,7 +72,7 @@ export const userHandler = async (ctx: Context, next: Next) => {
  */
 export const scopeHandler = async (ctx: Context, next: Next) => {
     const path = ctx.path.slice(1).split('/')[0]
-    ctx.state.scope = [`${path.toUpperCase()}`]
+    ctx.state.scope = [`${path.toLowerCase()}`]
     await next()
 }
 
