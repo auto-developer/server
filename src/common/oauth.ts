@@ -87,6 +87,12 @@ const model: AuthorizationCodeModel | PasswordModel | RefreshTokenModel | Client
         return removeCode(code)
     },
 
+    /**
+     * Invoked to check if the requested scope is valid for a particular client/user combination.
+     * @param user
+     * @param client
+     * @param scope
+     */
     validateScope: async (user: User, client: Client, scope: string | string[]): Promise<string | string[] | Falsey> => {
         const validScope = policy
             .filter(s => scope.includes(s.name))

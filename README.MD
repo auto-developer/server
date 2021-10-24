@@ -47,36 +47,85 @@ ADMIN_CLIENT_SECRET=<ADMIN_CLIENT_SECRET>
 
 
 
-## Oauth2 code Steps
+## Oauth2 API
 
+### Get /oauth/authorize
 
-### Step 1 request.
+#### Request
+| param | required |type| value |
+|---|---|---|---|
+|response_type|YES|string |code / password|
+|client_id|YES|string|6113de587eb4554f83407345|
+|redirect_uri|YES|string|http://localhost:3000/callback|
+|scope|YES|string/Array|admin|
+|state|YES|string|xyz|
 
+example
 ```
 http://localhost:8080/oauth/authorize?response_type=code&client_id=6113de587eb4554f83407345&redirect_uri=http://localhost:3000/callback&scope=admin&state=xyz
 ```
 
-### Step 2 check login.
+#### Response
+redirect redirect_uri?code=6njk232jkr233r&state=xyz
 
+
+### POST /oauth/token
+
+#### Request
+
+| param | required |type| value |
+|---|---|---|---|
+|code|YES|string |code / password|
+|client_id|YES|string|6113de587eb4554f83407345|
+|redirect_uri|YES|string|http://localhost:3000/callback|
+|scope|YES|string/Array|admin|
+|state|YES|string|xyz|
+
+#### Response
+
+| param | required |type| value |
+|---|---|---|---|
+|access_token|YES|string |7ddbd47e4179df88c...|
+|expires_in|YES|number|3599|
+|refresh_token|YES|string|1a0af56c94100c146...|
+|scope|YES|string/Array|["admin"]|
+|token_type|YES|string|Bearer|
+
+```json
+{
+  "access_token": "7ddbd47e4179df88c7629fc941bedbf8b64c45f8",
+  "token_type": "Bearer",
+  "expires_in": 3599,
+  "refresh_token": "1a0af56c94100c146735b6524539f14d3f196d71",
+  "scope": [
+    "admin"
+  ]
+}
 ```
-redirect to /sign-in?response_type=code&client_id=6113de587eb4554f83407345&redirect_uri=http://localhost:3000/callback&scope=read&state=xyz
+
+### ALL /oauth/authenticate
+
+#### Request
+
+| param | required |type| value |
+|---|---|---|---|
+|-|-|- |-|
+
+example
+```http request
+GET /oauth/authenticate HTTP/1.1
+
+Authorization: Bearer 7ddbd47e4179df88c7629fc941bedbf8b64c45f8
 ```
 
-### Step 3 submit username password login
+#### Response
 
-```
-POST /session
-```
+| param | required |type| value |
+|---|---|---|---|
+|user|YES|object ||
 
-### Step 4 login success
 
-```
-redirect to http://localhost:8080/oauth/authorize?response_type=code&client_id=6113de587eb4554f83407345&redirect_uri=http://www.baidu.com&scope=read&state=xyz
-```
 
-### Step 5 application
-
-### Step 6 redirect with code
 
 
 ![](static/assets/流程图.jpg)
