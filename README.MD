@@ -1,6 +1,8 @@
 
 # A oauth2 server based on [node-oauth-server](!https://github.com/oauthjs/node-oauth2-server)
 
+PR is welcome.
+
 ## Get Start
 
 - mongodb is required
@@ -96,6 +98,6 @@ service
 
 - findUsers
 - findUserById
-- addUser
+- insertUser
 - removeUser
 - updateUser
