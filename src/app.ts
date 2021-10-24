@@ -7,6 +7,7 @@ import koaStatic from 'koa-static';
 import path from 'path'
 import router from './router';
 import {pageErrorHandler} from "./router/handler";
+import {loggerMiddleware} from "./common/logger";
 
 const ROOT = process.cwd();
 
@@ -16,7 +17,7 @@ const app = new Koa();
 app.keys = [APP_KEY];
 app.proxy = true;
 
-app.use(logger());
+app.use(loggerMiddleware);
 app.use(koaStatic(staticRoot))
 app.use(koaViews(viewRoot, {map: {html: 'handlebars'}}))
 app.use(koaBody({multipart: true}));

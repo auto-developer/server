@@ -13,12 +13,6 @@ import {
 } from './config';
 import {logger} from "./logger";
 
-logger.info(`MYSQL_PORT:${MYSQL_PORT}`)
-logger.info(`MYSQL_USERNAME:${MYSQL_USERNAME}`)
-logger.info(`MYSQL_PASSWORD:${MYSQL_PASSWORD}`)
-logger.info(`MYSQL_HOST:${MYSQL_HOST}`)
-logger.info(`MYSQL_DATABASE:${MYSQL_DATABASE}`)
-
 export const sequelize = new Sequelize({
     dialect: 'mysql',
     host: MYSQL_HOST,

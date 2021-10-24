@@ -1,20 +1,41 @@
-import winston from 'winston'
+import {Context, Next} from "koa";
+import {createLogger, format, transports} from 'winston';
 
-export const logger = winston.createLogger({
-    //输出日志等级小于该设定值时输出,"info,erro,verbose“等
-    level: 'info',
-    //日志等级定义，默认为自带等级设定
-    levels: winston.config.npm.levels,
-    //对输出信息进行格式化
-    format: winston.format.simple(),
-    defaultMeta: { service: 'user-service' },
-    //日志信息输出到哪里，例如某个文件或者命令行,默认[]
+export const logger = createLogger({
+    defaultMeta: {service: 'user-service'},
     transports: [
-        new winston.transports.Console(),
-        new winston.transports.File({filename: 'combined.log'})
+        new transports.File({
+            filename: 'combined.log',
+            format: format.combine(
+                format.timestamp(),
+                format.splat(),
+                format.json(),
+            )
+        }),
+        new transports.Console({
+            format: format.combine(
+                format.colorize(),
+                format.timestamp(),
+                format.splat(),
+                format.simple(),
+            ),
+        }),
     ],
-    //exceptions 是否会出导致 process.exit, 设为false不会
     exitOnError: true,
-    //为true时所有日志不输出
-    silent: false
 })
+
+export const loggerMiddleware = async (ctx: Context, next: Next) => {
+    logger.info('<= %s %s', ctx.method, ctx.path, {
+        ip: ctx.ip,
+        url: ctx.url,
+        ua: ctx.headers["user-agent"],
+        method: ctx.method,
+    })
+    await next()
+    logger.info('=> %d %s %s', ctx.status, ctx.method, ctx.path, {
+        ip: ctx.ip,
+        url: ctx.url,
+        ua: ctx.headers["user-agent"],
+        method: ctx.method,
+    })
+}

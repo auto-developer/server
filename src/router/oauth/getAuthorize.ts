@@ -16,7 +16,7 @@ export const getAuthorize = async (ctx: Context, next: Next) => {
         ctx.status = oauthResponse.status || 500
         ctx.set(oauthResponse.headers || {})
     } catch (e) {
-        logger.error(e)
+        logger.warning(e)
         const {redirect_uri} = ctx.request.query
         ctx.assert(!Array.isArray(redirect_uri), 404)
         ctx.status = e.code;
