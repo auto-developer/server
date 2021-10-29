@@ -1,9 +1,9 @@
 import {Context, Next} from "koa";
 import {findClientById} from "../../service/Client";
 import dayjs from "dayjs";
-import relativeTime from 'dayjs/plugin/relativeTime'
+import RelativeTimeThreshold from 'dayjs/plugin/relativeTime'
 
-dayjs.extend(relativeTime)
+dayjs.extend(RelativeTimeThreshold)
 
 export const applicationHandler = async (ctx: Context, next: Next): Promise<void> => {
     const {client_id, redirect_uri} = ctx.request.query
