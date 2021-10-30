@@ -17,6 +17,6 @@ const ClientSchema = new Schema<Client>({
     accessTokenLifetime: Number,
     refreshTokenLifetime: Number,
     owner: {type: Schema.Types.ObjectId, ref: 'User', required: 'owner is required'},
-}, {toObject: {virtuals: true}});
+}, {toObject: {virtuals: true}, timestamps: true});
 
 export const ClientModel = mongoose.model<Client>('Client', ClientSchema);

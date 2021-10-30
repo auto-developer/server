@@ -12,6 +12,6 @@ const AuthenticationSchema = new Schema<Authentication>({
     identifier: String,
     certificate: String,
     user: {type: Schema.Types.ObjectId, ref: 'User'},
-}, {toObject: {virtuals: true}})
+}, {toObject: {virtuals: true}, timestamps: true})
 
 export const AuthenticationModel = mongoose.model<Authentication>('Authentication', AuthenticationSchema)

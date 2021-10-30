@@ -1,6 +1,6 @@
 import {Schema} from 'mongoose'
 import {mongoose} from "../../common/db";
-import {GENDER, PLATFORM, USER_ROLE, User} from "../../type";
+import {GENDER, PLATFORM, User, USER_ROLE} from "../../type";
 
 /**
  * UserSchema 用户基础信息
@@ -33,6 +33,6 @@ const UserSchema = new Schema<User>({
     mobile: {type: String, unique: true},
     mobileBindTime: {type: Date},
     applications: {type: [Schema.Types.ObjectId], ref: 'Client'}
-}, {toObject: {virtuals: true}})
+}, {toObject: {virtuals: true}, timestamps: true})
 
 export const UserModel = mongoose.model<User>('User', UserSchema)
