@@ -20,4 +20,3 @@ export const insertAuthentication: InsertAuthentication = async (authentication:
     const result = await instance.save();
     return result.toObject()
 }
-

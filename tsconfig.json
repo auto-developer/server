@@ -4,9 +4,9 @@
     "module": "CommonJS",
     "strict": true,
     "esModuleInterop": true,
-    "inlineSourceMap": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "outDir": "dist"
   },
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Recommended"

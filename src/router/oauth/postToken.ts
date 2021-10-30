@@ -13,7 +13,7 @@ export const postToken = async (ctx: Context, next: Next) => {
         ctx.status = oauthResponse.status || 500
         ctx.set(oauthResponse.headers || {});
     } catch (e) {
-        logger.warning(e)
+        logger.warn(e)
         ctx.body = {error: e.name, error_description: e.message};
         ctx.status = e.code;
     }
