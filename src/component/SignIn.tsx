@@ -15,6 +15,7 @@ const SignIn = (props: SignInProps) => <html lang="en">
     <meta charSet="UTF-8"/>
     <title>Sign In</title>
     <link rel="stylesheet" href="/assets/sign-in.css"/>
+    <link rel="stylesheet" href="/style.css"/>
 </head>
 <body>
 <main>
