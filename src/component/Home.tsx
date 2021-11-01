@@ -6,11 +6,14 @@ export type HomeProps = {
 
 const Home = (props: HomeProps) => <html>
 <head>
+    <meta charSet="UTF-8"/>
     <title>{props.title}</title>
     <link rel="stylesheet" href="/style.css"/>
 </head>
 <body>
-        <div className={"flex"}>123</div>
+<h1>Auth平台</h1>
+<a href="/session">sign in</a>
+<a href="/user">sign up</a>
 </body>
 </html>
 

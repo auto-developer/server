@@ -5,6 +5,8 @@ import oauth from "./oauth";
 import user from "./user";
 import session from "./session";
 import application from "./application";
+import Home from "../component/Home";
+import {renderToStaticMarkup} from "react-dom/server";
 
 const router = new Router<DefaultState, Context>();
 
@@ -14,7 +16,8 @@ router.use(session.routes())
 router.use(user.routes())
 router.use(application.routes())
 router.get('/', async (ctx: Context, next: Next) => {
-    await ctx.render('index')
+    ctx.body = renderToStaticMarkup(Home(ctx.state))
+
     await next()
 })
 
