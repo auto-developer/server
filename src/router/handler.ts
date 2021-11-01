@@ -5,22 +5,24 @@ import {Request, Response} from "oauth2-server";
 import {server} from "../common/oauth";
 import {findClientById} from "../service/Client";
 import {logger} from "../common/logger";
+import {renderToStaticMarkup} from "react-dom/server";
+import ErrorPage from "../component/ErrorPage";
 
 export const pageErrorHandler = async (ctx: Context, next: Next) => {
     try {
         await next()
         if (ctx.status === 404) {
-            await ctx.render('404')
+            ctx.body = renderToStaticMarkup(ErrorPage({}))
         }
     } catch (e) {
         switch (e.status) {
             case 500:
                 ctx.status = e.status
-                await ctx.render('500')
+                ctx.body = renderToStaticMarkup(ErrorPage(e))
                 break
             case 503:
                 ctx.status = e.status
-                await ctx.render('503')
+                ctx.body = renderToStaticMarkup(ErrorPage(e))
                 break
             default:
                 logger.error(e.message)

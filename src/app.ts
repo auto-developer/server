@@ -1,6 +1,5 @@
 import {APP_KEY} from './common/config';
 import Koa from 'koa';
-import logger from 'koa-logger';
 import koaBody from 'koa-body';
 import koaViews from 'koa-views';
 import koaStatic from 'koa-static';
@@ -21,8 +20,8 @@ app.use(loggerMiddleware);
 app.use(koaStatic(staticRoot))
 app.use(koaViews(viewRoot, {map: {html: 'handlebars'}}))
 app.use(koaBody({multipart: true}));
+app.use(pageErrorHandler)
 app.use(router.routes());
 app.use(router.allowedMethods());
-app.use(pageErrorHandler)
 
 export default app;

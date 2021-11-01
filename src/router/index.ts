@@ -17,7 +17,6 @@ router.use(user.routes())
 router.use(application.routes())
 router.get('/', async (ctx: Context, next: Next) => {
     ctx.body = renderToStaticMarkup(Home(ctx.state))
-
     await next()
 })
 
