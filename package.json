@@ -7,6 +7,7 @@
     "start": "node dist/index.js",
     "dev": "nodemon npm start",
     "tsc": "tsc -w",
+    "postcss": "postcss src/**/*.css --dir public --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "chuanpeng.zhu",
