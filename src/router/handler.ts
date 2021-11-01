@@ -7,6 +7,7 @@ import {findClientById} from "../service/Client";
 import {logger} from "../common/logger";
 import {renderToStaticMarkup} from "react-dom/server";
 import ErrorPage from "../component/ErrorPage";
+import SignIn from "../component/SignIn";
 
 export const pageErrorHandler = async (ctx: Context, next: Next) => {
     try {
@@ -41,7 +42,7 @@ export const sessionErrorHandler = async (ctx: Context, next: Next) => {
                 ctx.state.return_to = ctx.request.url
                 if (ctx.state.client_id) ctx.state.client = await findClientById(ctx.state.client_id)
                 ctx.cookies.set(`/user_session`, undefined)
-                await ctx.render('session')
+                ctx.body = renderToStaticMarkup(SignIn(ctx.state))
                 break
             default:
                 throw e
