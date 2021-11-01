@@ -3,7 +3,7 @@ import {findClientById} from "../../service/Client";
 import dayjs from "dayjs";
 import RelativeTimeThreshold from 'dayjs/plugin/relativeTime'
 import {renderToStaticMarkup} from "react-dom/server";
-import ApplicationAuthorize from "../../component/ApplicationAuthorize";
+import Authorize from "../../component/Authorize";
 
 dayjs.extend(RelativeTimeThreshold)
 
@@ -24,7 +24,7 @@ export const applicationHandler = async (ctx: Context, next: Next): Promise<void
             client,
             user
         }
-        ctx.body = renderToStaticMarkup(ApplicationAuthorize(ctx.state))
+        ctx.body = renderToStaticMarkup(Authorize(ctx.state))
         return
     }
     await next()

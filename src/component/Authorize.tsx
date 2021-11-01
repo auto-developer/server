@@ -2,7 +2,7 @@ import React from "react"
 import {Client, User} from "../type";
 import ClientInfo from "./common/ClientInfo";
 
-export type ApplicationAuthorizeProps = {
+export type AuthorizeProps = {
     client: Client,
     user: User,
     redirect_uri: string,
@@ -11,7 +11,7 @@ export type ApplicationAuthorizeProps = {
     return_to: string,
 }
 
-const ApplicationAuthorize = (props: ApplicationAuthorizeProps) => {
+const Authorize = (props: AuthorizeProps) => {
 
     return <html lang="en">
     <head>
@@ -143,4 +143,4 @@ const ApplicationAuthorize = (props: ApplicationAuthorizeProps) => {
     </body>
     </html>
 }
-export default ApplicationAuthorize
+export default Authorize
