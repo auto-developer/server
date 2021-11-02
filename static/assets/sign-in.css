@@ -6,7 +6,6 @@ html, body {
 main {
     width: 340px;
     margin: 0 auto;
-    padding: 16px;
     box-sizing: border-box;
 }
 
@@ -31,26 +30,8 @@ main {
     margin: -16px;
 }
 
-.auth-form {
-    box-sizing: border-box;
-}
-
-.auth-form .app-icon {
-    text-align: center;
-}
-
-.auth-form h1 {
-    font-size: 24px;
-    text-align: center;
-    font-weight: 300;
-    letter-spacing: -0.5px;
-}
-
 .auth-form .auth-form-body {
-    padding: 20px;
-    box-sizing: border-box;
     background-color: rgb(246, 248, 250);
-    border-radius: 6px;
     border: 1px solid rgb(235, 237, 239);
 }
 

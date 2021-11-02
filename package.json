@@ -5,9 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "nodemon npm start",
-    "tsc": "tsc -w",
-    "postcss": "postcss src/**/*.css --dir static --watch",
+    "dev": "concurrently npm:dev-*",
+    "dev-server": "nodemon npm start",
+    "dev-tsc": "tsc -w",
+    "dev-postcss": "tsc -w & postcss src/**/*.css --dir static --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "chuanpeng.zhu",
@@ -25,6 +26,7 @@
     "@types/uuid": "^8.3.1",
     "@types/validator": "^13.6.3",
     "autoprefixer": "^10.4.0",
+    "concurrently": "^6.3.0",
     "nodemon": "^2.0.12",
     "postcss": "^8.3.11",
     "postcss-cli": "^9.0.1",
