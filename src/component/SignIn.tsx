@@ -14,7 +14,6 @@ const SignIn = (props: SignInProps) => <html lang="en">
 <head>
     <meta charSet="UTF-8"/>
     <title>Sign In</title>
-    <link rel="stylesheet" href="/assets/sign-in.css"/>
     <link rel="stylesheet" href="/style.css"/>
 </head>
 <body>
@@ -28,37 +27,43 @@ const SignIn = (props: SignInProps) => <html lang="en">
     </a>
 </div>
 <main>
-    <div className="auth-form px-4">
-        <div className="mb-4 text-center text-2xl font-light">
-            <h1>Sign in to Github</h1>
-        </div>
-        <div className="auth-form-body p-5 border-r-4">
-            {props.client && <div className="auth-application">
-              <div className="logo">
-                <img src={props.client.logo} alt="Application logo"/>
+    <div className="auth-form px-4 max-w-xs m-auto">
+        {!props.client && <div className="mb-4 text-center text-2xl font-light">
+          <h1>Sign in to Github</h1>
+        </div>}
+
+        {props.error && <FormErrorMessage message={props.error.message}/>}
+
+        <div className="auth-form-body p-5 rounded-md mt-4 border border-gray-300 bg-gray-50">
+            {props.client && <div className="text-center mb-6 pb-4 border-b border-gray-300">
+              <div className="rounded-full bg-white w-28 h-28 m-auto flex items-center justify-center shadow-md"
+                   style={{width: 96, height: 96}}>
+                <img src={props.client.logo} style={{width: 50}} alt="Application logo"/>
               </div>
               <p>Sign in to <strong>{props.client.name}</strong>
                 <br/>
                 to continue to <strong>GitLab.com</strong>
               </p>
-              <hr/>
             </div>}
 
-            {props.error && <FormErrorMessage message={props.error.message}/>}
-
-            <form action="/session" method="post">
-                <label htmlFor="identifier">Username or email address</label>
-                <input id="identifier" name="identifier" type="text"/>
-                <label htmlFor="certificate">Password</label>
-                <input id="certificate" name="certificate" type="password"/>
+            <form action="/session" method="post" className="mb-0 flex flex-col">
+                <label htmlFor="identifier" className="text-sm mb-2">Username or email address</label>
+                <input id="identifier" name="identifier"
+                       className="rounded-md leading-5 px-3 py-1.5 mb-4 border border-gray-300"
+                       type="text"/>
+                <label htmlFor="certificate" className="text-sm mb-2">Password</label>
+                <input id="certificate" name="certificate"
+                       className="rounded-md leading-5 px-3 py-1.5 mb-4 border border-gray-300"
+                       type="password"/>
                 <input name="return_to" type="hidden" value={props.return_to}/>
                 <input name="client_id" type="hidden" value={props.client_id}/>
                 <input name="grant_type" type="hidden" value="password"/>
-                <input type="submit" value="Sign in"/>
+                <input type="submit" className="rounded-md text-white text-sm font-medium h-8 bg-primary cursor-pointer"
+                       value="Sign in"/>
             </form>
         </div>
-        <p>
-            New to Github? <a href="/sign-up">Create an account</a>.
+        <p className="rounded-md px-5 py-4 text-sm border border-gray-300 mt-4">
+            New to Github? <a href="/sign-up" className="text-blue-600">Create an account</a>.
         </p>
     </div>
 </main>

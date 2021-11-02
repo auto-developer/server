@@ -7,7 +7,15 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      fontSize: {
+        'xs': '.8125rem'
+      },
+      colors: {
+        primary: 'rgb(46, 164, 79)',
+        secondary: '#ecc94b',
+      },
+    },
   },
   variants: {
     extend: {},
