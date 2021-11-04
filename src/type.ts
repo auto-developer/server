@@ -38,12 +38,15 @@ export interface Client extends ClientType {
     logo: string;
     description: string;
     name: string;
+    owner: User;
 }
 
 export interface User extends UserType {
     avatar: string;
     applications: Client;
     registerSource: PLATFORM;
+    username: string;
+    nickname: string;
 }
 
 export interface Authentication {
