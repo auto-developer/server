@@ -8,7 +8,7 @@
     "dev": "concurrently npm:dev-*",
     "dev-server": "nodemon npm start",
     "dev-tsc": "tsc -w",
-    "dev-postcss": "tsc -w & postcss src/**/*.css --dir static --watch",
+    "dev-postcss": "tsc -w & postcss src/**/*.css --base src/component --dir static --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "chuanpeng.zhu",

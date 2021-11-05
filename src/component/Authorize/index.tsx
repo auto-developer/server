@@ -21,11 +21,12 @@ const Authorize = (props: AuthorizeProps) => {
     <head>
         <meta charSet="UTF-8"/>
         <title>Authorize application</title>
-        <link rel="stylesheet" href="/assets/application.css"/>
+        <link rel="stylesheet" href="/style.css"/>
+        <link rel="stylesheet" href="/Authorize/style.css"/>
     </head>
-    <body>
+    <body className="bg-gray-50">
     <main>
-        <div className="mx-auto">
+        <div className="m-auto" style={{maxWidth: 530}}>
             <AuthorizeHeader clientName={props.client.name}
                              clientLogo={props.client.logo}/>
 
@@ -47,7 +48,7 @@ const Authorize = (props: AuthorizeProps) => {
 
                 </div>
                 <ClientInfo created_to_now={props.created_to_now}/>
-                <div className="box-user-three">
+                <div className="text-center my-4">
                     <a href="https://docs.github.com/articles/authorizing-oauth-apps" target="_blank"
                        className="Link--muted">Learn more about OAuth</a>
                 </div>
