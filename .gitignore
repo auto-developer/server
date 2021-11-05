@@ -4,3 +4,5 @@
 /.env
 /*.log
 /static/**/*.css
+/src/**/*.js
+/src/**/*.js.map

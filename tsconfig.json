@@ -6,7 +6,6 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "outDir": "dist",
     "jsx": "react"
   },
   "$schema": "https://json.schemastore.org/tsconfig",
