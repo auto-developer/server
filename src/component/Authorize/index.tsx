@@ -30,9 +30,9 @@ const Authorize = (props: AuthorizeProps) => {
             <AuthorizeHeader clientName={props.client.name}
                              clientLogo={props.client.logo}/>
 
-            <div className="mx-down">
-                <div className="box-user-one">
-                    <div className="box-body">
+            <div className="">
+                <div className="border border-gray-300 rounded-md bg-white">
+                    <div className="border-b border-gray-300 p-4">
 
                         <RequireInfo clientName={props.client.name}
                                      userAvatar={props.user.avatar}
